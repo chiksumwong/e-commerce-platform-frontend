@@ -1,13 +1,13 @@
 <template>
-  <div>
-    this is home page
-  </div>
+  <div>show something</div>
 </template>
 
 <script>
-
 export default {
-  components: {
-  }
+
 }
 </script>
+
+<style>
+
+</style>
