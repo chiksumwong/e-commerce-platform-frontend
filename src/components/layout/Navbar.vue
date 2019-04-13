@@ -16,7 +16,6 @@
             </b-nav-form>
           </b-navbar-nav>
           
-          
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">

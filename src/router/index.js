@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Home from '@/views/Home.vue'
-// import LoginAndRegister from '@/views/LoginAndRegister'
+import Home from '@/views/Home'
+import Product from '@/views/Product'
 
 import AccountRoutes from './account'
 
@@ -15,13 +15,13 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
     },
-    // {
-    //   path: '/login',
-    //   name: 'home',
-    //   component: LoginAndRegister
-    // },
+    {
+      path: '/product/:id',
+      name: 'Product',
+      component: Product
+    },
     ...AccountRoutes,
   ]
 })

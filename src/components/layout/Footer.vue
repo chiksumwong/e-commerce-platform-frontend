@@ -1,0 +1,25 @@
+<template>
+    <div>
+        <footer class="bg-primary">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Wong Chik Sum 2019</p>
+            </div>
+        </footer>
+    </div>
+</template>
+
+<script>
+    export default {
+
+    }
+</script>
+
+<style scoped>
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        padding: 20px;
+    }
+</style>
