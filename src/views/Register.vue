@@ -2,16 +2,20 @@
 
   <div class="container-fluid">
     <div class="container">
-      <h2 class="text-center">E-Commerce Platform</h2>
 
+      <h2 class="text-center text-uppercase">Registration</h2>
       <hr>
+
       <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-3">
+        </div>
+
+        <div class="col-md-6">
+
           <form role="form" method="post" action="register.php">
             <fieldset>
-              <p class="text-uppercase">Registration</p>
               <div class="form-group">
-                <input type="text" name="username" id="username" class="form-control input-lg" placeholder="username">
+                <input type="text" name="username" id="username" class="form-control input-lg" placeholder="User Name">
               </div>
 
               <div class="form-group">
@@ -39,36 +43,14 @@
 
             </fieldset>
           </form>
+
         </div>
-
-        <div class="col-md-2">
-          <!-------null------>
-        </div>
-
-        <div class="col-md-5">
-          <form role="form">
-            <fieldset>
-              <p class="text-uppercase">Login</p>
-
-              <div class="form-group">
-                <input type="email" name="username" id="username" class="form-control input-lg" placeholder="username">
-              </div>
-              <div class="form-group">
-                <input type="password" name="password" id="password" class="form-control input-lg"
-                  placeholder="Password">
-              </div>
-              <div>
-                <input type="submit" class="btn btn-md btn-primary" value="Sign In">
-              </div>
-
-            </fieldset>
-          </form>
+        <div class="col-md-3">
         </div>
       </div>
+
     </div>
-
   </div>
-
 </template>
 
 <script>
