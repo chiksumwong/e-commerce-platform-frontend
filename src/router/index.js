@@ -4,11 +4,11 @@ import Router from 'vue-router'
 import Home from '@/views/Home'
 import Product from '@/views/Product'
 
-import AccountRoutes from './account'
+import UserRoutes from './user'
 
 Vue.use(Router)
 
-export default new Router({
+export const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -22,6 +22,23 @@ export default new Router({
       name: 'Product',
       component: Product
     },
-    ...AccountRoutes,
+    ...UserRoutes,
+
+    
+    // otherwise redirect to home
+    { path: '*', redirect: '/' }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+
+  next();
 })

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Navbar></Navbar>
-    <router-view />
-    <Footer></Footer>
+    <Navbar/>
+    <router-view></router-view>
+    <Footer/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   #app {
     min-height: 100%;
     position: relative;
