@@ -13,15 +13,15 @@
                     <form role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input type="email" name="username" id="username" class="form-control input-lg"
-                                    placeholder="username">
+                                <input type="email" name="username" id="username" v-model="email" class="form-control input-lg"
+                                    placeholder="E-mail">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" id="password" class="form-control input-lg"
+                                <input type="password" name="password" id="password" v-model="password" class="form-control input-lg"
                                     placeholder="Password">
                             </div>
                             <div>
-                                <input type="submit" class="btn btn-md btn-primary" value="Login">
+                                <input type="submit" class="btn btn-md btn-primary" value="Login" @click="login">
                             </div>
                         </fieldset>
                     </form>
@@ -38,7 +38,21 @@
 
 <script>
     export default {
-
+        data(){
+            return{
+                email:'',
+                password:''
+            }
+        },
+        methods: {
+            login() {
+                const email = this.email;
+                const password = this.password;
+                if (email && password) {
+                    this.$store.dispatch('user/login', { email, password });
+                }
+            },
+        },
     }
 </script>
 

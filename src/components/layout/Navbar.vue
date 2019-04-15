@@ -22,11 +22,11 @@
           <!-- Login and register button -->
 
           <b-nav-form v-if="!isLogin">
-            <b-button size="sm" variant="success" href="/login" class="mr-sm-2">Login</b-button>
+            <b-button size="sm" variant="success" href="/login" class="mr-sm-2" @click="login">Login</b-button>
           </b-nav-form>
 
           <b-nav-form v-if="!isLogin">
-            <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0">Register</b-button>
+            <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register</b-button>
           </b-nav-form>
 
           <b-nav-item-dropdown right v-if="isLogin">
@@ -46,14 +46,31 @@
   export default {
     data() {
       return {
-        isLogin: false,
-        username: 'Peter'
+        username: 'Peter',
       }
     },
     methods: {
+      register() {
+        this.$route.push('/register')
+      },
+      login() {
+        this.$route.push('/login')
+      },
       logout() {
-        this.isLogin = false
+        this.$store.dispatch('user/logout')
       }
+    },
+    computed: {
+      isLogin() {
+        return this.$store.user.status.isLogin;
+      },
+      username(){
+        return this.$store.user.user;
+      }
+    },
+    created() {
+      // reset login status to logout
+      this.$store.dispatch('user/logout')
     }
   }
 </script>
