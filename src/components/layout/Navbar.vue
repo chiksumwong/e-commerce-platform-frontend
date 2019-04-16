@@ -49,29 +49,29 @@
         username: 'Peter',
       }
     },
-    methods: {
-      register() {
-        this.$route.push('/register')
-      },
-      login() {
-        this.$route.push('/login')
-      },
-      logout() {
-        this.$store.dispatch('user/logout')
-      }
-    },
-    computed: {
-      isLogin() {
-        return this.$store.user.status.isLogin;
-      },
-      username(){
-        return this.$store.user.user;
-      }
-    },
-    created() {
-      // reset login status to logout
-      this.$store.dispatch('user/logout')
-    }
+    // methods: {
+    //   register() {
+    //     this.$route.push('/register')
+    //   },
+    //   login() {
+    //     this.$route.push('/login')
+    //   },
+    //   logout() {
+    //     this.$store.dispatch('user/logout')
+    //   }
+    // },
+    // computed: {
+    //   isLogin() {
+    //     return this.$store.user.status.isLogin;
+    //   },
+    //   username(){
+    //     return this.$store.user.user;
+    //   }
+    // },
+    // created() {
+    //   // reset login status to logout
+    //   this.$store.dispatch('user/logout')
+    // }
   }
 </script>
 

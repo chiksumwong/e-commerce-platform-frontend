@@ -1,5 +1,5 @@
-import Login from '@/views/Login'
-import Register from '@/views/Register'
+import Login from '@/views/user/Login'
+import Register from '@/views/user/Register'
 
 export default [
     {

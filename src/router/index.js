@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/views/Home'
-import Product from '@/views/Product'
+import Product from '@/views/product/Product'
 
 import UserRoutes from './user'
 
@@ -32,7 +32,7 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // web pages which don't need to login
-  const publicPages = ['/','/product/:id','/login','/register'];
+  const publicPages = ['/','/product/*','/login','/register'];
 
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');

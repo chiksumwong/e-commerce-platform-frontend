@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router/index.js'
-import store from './store/index.js'
+import { router } from './router'
+import { store } from './store';
 
 Vue.config.productionTip = false
 
@@ -14,6 +14,7 @@ Vue.use(BootstrapVue)
 // Axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import '@/helper/axios_setting'
 Vue.use(VueAxios, axios)
 
 // Notification

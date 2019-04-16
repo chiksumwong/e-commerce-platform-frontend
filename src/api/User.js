@@ -1,11 +1,9 @@
-import Vue from 'vue';
-
 class UserAPI {
-    login = (params) => Vue.prototype.$axios.post('/user/login', params);
+    // login = (payload) => this.axios.post('/user/login', payload)
 
-    register = (params) => Vue.prototype.$axios.post('/user/register', params)
+    register = (payload) => this.axios.post('/user/register', payload)
     
-    getUserById = (userId) => Vue.prototype.$axios.get('/user/' + userId);
+    // getUserById = (userId) => this.axios.get('/user/' + userId)
 }
 
-export default new UserAPI();
+export default new UserAPI()
