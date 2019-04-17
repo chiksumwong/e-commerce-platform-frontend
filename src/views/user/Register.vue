@@ -67,7 +67,7 @@
           console.log("register success", res.data)
           this.$store.dispatch('user/login', { email, password });
         } else {
-          console.log('loginFailure', res.err);
+          console.log('Fail', res.err);
         }
         
       },
