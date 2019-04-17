@@ -1,9 +1,9 @@
-class UserAPI {
-    // login = (payload) => this.axios.post('/user/login', payload)
-
-    register = (payload) => this.axios.post('/user/register', payload)
+import Vue from 'vue'    
     
-    // getUserById = (userId) => this.axios.get('/user/' + userId)
+const UserAPI = {
+    register : payload => Vue.prototype.$axios.post('/register', payload),
+    login: (payload) => Vue.prototype.$axios.post('/login', payload),
+    getUserById: (userId) => Vue.prototype.$axios.get('/user/' + userId)
 }
 
-export default new UserAPI()
+export default UserAPI

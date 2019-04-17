@@ -1,4 +1,5 @@
-// import UserAPI from '@/api/User'
+import UserAPI from '@/api/User'
+import {router} from '@/router'
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -6,37 +7,26 @@ const initialState = user
     ? { status: { isLogin: true }, user }
     : { status: {}, user: null };
 
-export const users = {
+export default {
     namespaced: true,
     state: initialState,
     actions: {
-        async login({ commit }, { email, password }) {
+        async login({ commit }, payload) {
 
             // user login via user login api
-            const params = {
-                email: email,
-                password: password
-            }
-            // const res = await UserAPI.login(params);
+            const res = await UserAPI.login(payload);
 
-            const res = this.$ajax({
-                method: 'post',
-                url: 'http://localhost:3000/api/v1/login',
-                data: {
-                  email: 'Sam',
-                  password: '1234'
-                }
-             })
-
-            if (res.data.result){
-                commit('loginSuccess', user);
-                localStorage.setItem('user', JSON.stringify(user));
-                this.$route.push('/');
+            if (res.data){
+                commit('loginSuccess', res.data);
+                console.log('login success', res.data)
+                localStorage.setItem('user', JSON.stringify(res.data));
+                router.push('/')
             }else{
-                commit('loginFailure', res.data.error_message);
+                commit('loginFailure');
             }
 
         },
+
         logout({ commit }) {
             localStorage.removeItem('user');
             commit('logout');

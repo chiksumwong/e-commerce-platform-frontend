@@ -13,9 +13,8 @@ Vue.use(BootstrapVue)
 
 // Axios
 import axios from 'axios'
-import VueAxios from 'vue-axios'
-import '@/helper/axios_setting'
-Vue.use(VueAxios, axios)
+axios.defaults.baseURL = 'http://localhost:3000/api/v1/'
+Vue.prototype.$axios = axios;
 
 // Notification
 import Notifications from 'vue-notification'

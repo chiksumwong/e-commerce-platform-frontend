@@ -19,7 +19,7 @@ export const router = new Router({
     },
     {
       path: '/product/:id',
-      name: 'Product',
+      name: 'product',
       component: Product
     },
     ...UserRoutes,
@@ -32,9 +32,9 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // web pages which don't need to login
-  const publicPages = ['/','/product/*','/login','/register'];
+  const publicPages = ['home','product','login','register'];
 
-  const authRequired = !publicPages.includes(to.path);
+  const authRequired = !publicPages.includes(to.name);
   const loggedIn = localStorage.getItem('user');
 
   if (authRequired && !loggedIn) {

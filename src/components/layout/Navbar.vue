@@ -21,15 +21,15 @@
         <b-navbar-nav class="ml-auto">
           <!-- Login and register button -->
 
-          <b-nav-form v-if="!isLogin">
+          <b-nav-form v-show="!isLogin">
             <b-button size="sm" variant="success" href="/login" class="mr-sm-2" @click="login">Login</b-button>
           </b-nav-form>
 
-          <b-nav-form v-if="!isLogin">
+          <b-nav-form v-show="!isLogin">
             <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register</b-button>
           </b-nav-form>
 
-          <b-nav-item-dropdown right v-if="isLogin">
+          <b-nav-item-dropdown right v-show="isLogin">
             <!-- Using 'button-content' slot -->
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
@@ -46,32 +46,31 @@
   export default {
     data() {
       return {
-        username: 'Peter',
       }
     },
-    // methods: {
-    //   register() {
-    //     this.$route.push('/register')
-    //   },
-    //   login() {
-    //     this.$route.push('/login')
-    //   },
-    //   logout() {
-    //     this.$store.dispatch('user/logout')
-    //   }
-    // },
-    // computed: {
-    //   isLogin() {
-    //     return this.$store.user.status.isLogin;
-    //   },
-    //   username(){
-    //     return this.$store.user.user;
-    //   }
-    // },
-    // created() {
-    //   // reset login status to logout
-    //   this.$store.dispatch('user/logout')
-    // }
+    methods: {
+      register() {
+        this.$router.push('/register')
+      },
+      login() {
+        this.$router.push('/login')
+      },
+      logout() {
+        this.$store.dispatch('user/logout')
+      }
+    },
+    computed: {
+      isLogin() {
+        return this.$store.user.status.isLogin
+      },
+      username(){
+        return this.$store.user.user.user_name
+      }
+    },
+    created() {
+      // reset login status to logout
+      this.$store.dispatch('user/logout')
+    }
   }
 </script>
 
