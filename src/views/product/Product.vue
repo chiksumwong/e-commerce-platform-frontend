@@ -53,6 +53,10 @@
     </div>
     <!-- /.row -->
 
+     <b-button block variant="success" v-show="isLogin">Add To Cart</b-button>
+     
+     <br/><br/>
+
   </div>
   <!-- /.container -->
 </template>
@@ -84,6 +88,11 @@ import ProductAPI from '@/api/Product.js'
     },
     mounted(){
       this.loadProduct()
+    },
+    computed: {
+      isLogin() {
+        return this.$store.state.user.status.isLogin
+      }
     }
   }
 </script>

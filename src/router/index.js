@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import Home from '@/views/Home'
 import Product from '@/views/product/Product'
 import Cart from '@/views/product/Cart'
+import Payment from '@/views/product/Payment'
+import PaymentCompleted from '@/views/product/PaymentCompleted'
 
 import UserRoutes from './user'
 
@@ -27,6 +29,15 @@ export const router = new Router({
       path: '/cart',
       name: 'cart',
       component: Cart
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: Payment
+    },{
+      path: '/payment/completed',
+      name: 'payment_completed',
+      component: PaymentCompleted
     },
     ...UserRoutes,
 

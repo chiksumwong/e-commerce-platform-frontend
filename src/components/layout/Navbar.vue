@@ -46,7 +46,7 @@
             </b-dropdown-item>
           
 
-            <b-dropdown-item @click="logout">
+            <b-dropdown-item @click="toCart">
               <b-button block variant="primary">View Cart</b-button>
             </b-dropdown-item>
 
