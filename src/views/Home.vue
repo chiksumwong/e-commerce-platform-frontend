@@ -1,66 +1,66 @@
 <template>
   <div class="container">
-    <div class="row">
-
-      <div class="col-lg-3">
-        <br>
-        <div class="list-group">
-          <a href="#" class="list-group-item">Clothing</a>
-          <a href="#" class="list-group-item">Electronics</a>
-          <a href="#" class="list-group-item">Backpacks</a>
-        </div>
-      </div>
-
-      <div class="col-lg-9">
         <br>
         <!-- Product Items -->
         <div class="row">
 
-          <div v-for="product in products" class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a :href="'/product/'+product.id"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+          <div v-for="product in products" class="col-lg-4 col-md-6 mb-3">
+            <div class="card">
+
+              <!-- image -->
+              <a :href="'/product/'+product._id"><img class="card-img-top" :src="product.images[0].path" alt=""></a>
+
+              <!-- card body -->
               <div class="card-body">
                 <h4 class="card-title">
-                  <a :href="'/product/'+product.id">{{product.name}}</a>
+                  <a :href="'/product/'+product._id">{{product.name}}</a>
                 </h4>
-                <h5>{{product.price}}</h5>
+                <h5>{{product.selling_price}}</h5>
                 <p class="card-text">{{product.description}}</p>
               </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+
+              <!-- card footer -->
+              <div class="card-footer" v-show="isLogin">
+                <b-button block variant="success">Add To Cart</b-button>
               </div>
+
             </div>
           </div>
 
         </div>
-      </div>
-
     </div>
-  </div>
 </template>
 
 <script>
+import ProductAPI from '@/api/Product.js'
   export default {
     data() {
       return {
-        products: [{
-          id: '1',
-          name: 'Item One',
-          price: '$24.99',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!'
-        }, {
-          id: '1',
-          name: 'Item One',
-          price: '$24.99',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!'
-        }, {
-          id: '1',
-          name: 'Item One',
-          price: '$24.99',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!'
-        }]
+        products: []
+      }
+    },
+    methods:{
+      async loadProducts(){
+        const res = await ProductAPI.getAllProduct()
+        if (res.data) {
+          console.log("load products success", res.data)
+
+          this.products = res.data
+
+        } else {
+          console.log('Fail', res.err);
+        }
+      }
+    },
+    mounted(){
+      this.loadProducts()
+    },
+    computed: {
+      isLogin() {
+        return this.$store.state.user.status.isLogin
       }
     }
+
   }
 </script>
 

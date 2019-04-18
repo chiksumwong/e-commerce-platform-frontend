@@ -4,7 +4,7 @@ import {router} from '@/router'
 const user = JSON.parse(localStorage.getItem('user'));
 
 const initialState = user
-    ? { status: { isLogin: true }, username }
+    ? { status: { isLogin: true }, username:user.user_name }
     : { status: {}, username: null };
 
 export default {

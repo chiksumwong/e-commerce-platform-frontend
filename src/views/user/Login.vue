@@ -1,25 +1,48 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h2 class="text-center text-uppercase">Login</h2>
-                <hr>
-                <form>
-                    <div class="form-group">
-                        <input type="email" name="username" id="username" v-model="email" class="form-control input-lg"
-                            placeholder="E-mail">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" id="password" v-model="password"
-                            class="form-control input-lg" placeholder="Password">
-                    </div>
-                    <div>
-                        <b-btn variant="primary" :block="true" class="mt-4" @click="login">Login</b-btn>
-                    </div>
-                </form>
+  <div class="container">
+    <br>
+    <div class="card" style="width: 18rem;">
+
+      <div class="card-header bg-primary text-light text">
+        <i class="fas fa-file-alt"></i>
+        Login
+      </div>
+
+      <div class="card-body">
+        <form>
+
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+              </div>
+              <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" v-model="email"/>
             </div>
-        </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              </div>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" v-model="password"/>
+            </div>
+          </div>
+
+          <div class="form-group ">
+            <button type="button" class="btn btn-success btn-block" @click="login">Login</button>
+            <button type="button" class="btn btn-primary btn-block" @click="toRegister">Register</button>
+          </div>
+
+        </form>
+
+      </div>
+
     </div>
+  </div>
+
 </template>
 
 <script>
@@ -41,18 +64,25 @@
                     });
                 }
             },
+            toRegister(){
+                this.$router.push('/register')
+            }
         },
     }
 </script>
 
 
 <style scoped>
-    .container-fluid {
-        padding: 50px;
-    }
+  .card {
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
+  }
 
-    .container {
-        background-color: white;
-        padding: 50px;
-    }
+  i {
+    margin-right: 10px;
+  }
 </style>

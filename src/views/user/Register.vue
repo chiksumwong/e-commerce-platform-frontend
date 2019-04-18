@@ -1,41 +1,68 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <h2 class="text-center text-uppercase">Registration</h2>
-        <hr>
+    <br>
+    <div class="card" style="width: 18rem;">
+
+      <div class="card-header bg-primary text-light text">
+        <i class="fas fa-file-alt"></i>
+        Register
+      </div>
+
+      <div class="card-body">
         <form>
           <div class="form-group">
-            <input type="text" name="username" id="username" v-model="username" class="form-control input-lg"
-              placeholder="User Name">
+            <label for="name">User Name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+              </div>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter User Name" v-model="username"/>
+            </div>
           </div>
 
           <div class="form-group">
-            <input type="email" name="email" id="email" v-model="email" class="form-control input-lg"
-              placeholder="Email Address">
+            <label for="email">Your Email</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+              </div>
+              <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" v-model="email"/>
+            </div>
           </div>
+
           <div class="form-group">
-            <input type="password" name="password" id="password" v-model="password" class="form-control input-lg"
-              placeholder="Password">
+            <label for="password">Password</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              </div>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" v-model="password"/>
+            </div>
           </div>
+
           <div class="form-group">
-            <input type="password" name="password_confirm" id="password2" class="form-control input-lg"
-              placeholder="Password Confirm">
+            <label for="confirm">Confirm Password</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              </div>
+              <input type="password" class="form-control" name="confirm" id="confirm"
+                placeholder="Confirm Password" />
+            </div>
           </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input">
-              By Clicking register you're agree to our <a href="">policy & terms</a>
-            </label>
+
+          <div class="form-group ">
+            <button type="button" class="btn btn-success btn-block" @click="register">Register</button>
+            <button type="button" class="btn btn-primary btn-block" @click="toLogin">Login</button>
           </div>
-          <br>
-          <div>
-            <b-btn variant="primary" :block="true" class="mt-4" @click="register">Register</b-btn>
-          </div>
+
         </form>
+
       </div>
+
     </div>
   </div>
+
 </template>
 
 <script>
@@ -65,23 +92,32 @@
 
         if (res.data) {
           console.log("register success", res.data)
-          this.$store.dispatch('user/login', { email, password });
+          this.$store.dispatch('user/login', {
+            email,
+            password
+          });
         } else {
-          console.log('loginFailure', res.err);
+          console.log('Fail', res.err);
         }
-        
+
       },
+      toLogin(){
+        this.$router.push('/login')
+      }
     },
   }
 </script>
 
 <style scoped>
-  .container-fluid {
-    padding: 50px;
+  .card {
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
   }
-
-  .container {
-    background-color: white;
-    padding: 50px;
+  i {
+    margin-right: 10px;
   }
 </style>
