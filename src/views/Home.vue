@@ -4,7 +4,7 @@
         <!-- Product Items -->
         <div class="row">
 
-          <div v-for="product in products" class="col-lg-4 col-md-6 mb-3">
+          <div v-for="product in products" :key="product.id" class="col-lg-4 col-md-6 mb-3">
             <div class="card">
 
               <!-- image -->
@@ -21,7 +21,7 @@
 
               <!-- card footer -->
               <div class="card-footer" v-show="isLogin">
-                <b-button block variant="success">Add To Cart</b-button>
+                <b-button block variant="success" @click="addToCart(product._id)">Add To Cart</b-button>
               </div>
 
             </div>
@@ -49,6 +49,25 @@ import ProductAPI from '@/api/Product.js'
 
         } else {
           console.log('Fail', res.err);
+        }
+      },
+
+      async addToCart(productId){
+        let userId = this.$store.state.user.user_id
+
+        const payload = {
+          quantity: 1,
+          is_active: 1,
+          product_id: productId,
+          user_id: userId
+        }
+
+        const res = await ProductAPI.addProductToCart(payload)
+
+        if(res.data){
+          console.log("add to cart success", res.data)
+          // update carts
+          this.$store.dispatch('cart/updateCarts', res.data._id);
         }
       }
     },

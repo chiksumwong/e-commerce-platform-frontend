@@ -13,8 +13,26 @@ Vue.use(BootstrapVue)
 
 // Axios
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3000/api/v1/'
-Vue.prototype.$axios = axios;
+const instance  = axios.create({
+  // baseURL: (process.env.VUE_APP_BASE_URL !== undefined) ? process.env.VUE_APP_BASE_URL : 'http://localhost:3000/api/v1/'
+  baseURL: 'http://localhost:3000/api/v1/'
+})
+instance.interceptors.request.use(
+ (config) => {
+   let user = JSON.parse(localStorage.getItem('user'));
+
+   if (user) {
+     const authToken = 'Bearer ' + user.token
+     config.headers['Authorization'] = authToken
+   }
+
+   return config
+ },
+ (error) => {
+   return Promise.reject(error)
+ }
+)
+Vue.prototype.$axios = instance ;
 
 // Notification
 import Notifications from 'vue-notification'

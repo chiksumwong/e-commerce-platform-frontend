@@ -28,7 +28,7 @@
           <b-nav-item-dropdown right v-show="isLogin">
             <span slot="button-content"><i class="fas fa-shopping-cart"></i></span>
 
-            <b-dropdown-item class="cart">
+            <b-dropdown-item class="cart" v-for="cart in carts" :key="cart.id">
 
               <span class="item">
                     <span class="item-left" @click="toCart">
@@ -45,10 +45,13 @@
 
             </b-dropdown-item>
           
-
             <b-dropdown-item @click="toCart">
-              <b-button block variant="primary">View Cart</b-button>
+              <b-button block variant="primary" v-if="carts.length > 0">View Cart</b-button>
             </b-dropdown-item>
+
+            <div class="text-center" v-if="carts.length < 1">
+              <p>Nothing in Cart</p>
+            </div>
 
           </b-nav-item-dropdown>
           <!-- User -->
@@ -65,6 +68,10 @@
 
 <script>
   export default {
+    data(){
+      return{
+      }
+    },
     methods: {
       register() {
         this.$router.push('/register')
@@ -85,6 +92,9 @@
       },
       username(){
         return this.$store.state.user.username
+      },
+      carts(){
+        return this.$store.state.cart.carts
       }
     }
   }
