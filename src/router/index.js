@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Home from '@/views/Home'
 import Product from '@/views/product/Product'
+import Cart from '@/views/product/Cart'
 
 import UserRoutes from './user'
 
@@ -15,12 +16,17 @@ export const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: Home
     },
     {
       path: '/product/:id',
       name: 'product',
       component: Product
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: Cart
     },
     ...UserRoutes,
 

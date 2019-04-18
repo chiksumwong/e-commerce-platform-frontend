@@ -20,8 +20,8 @@
               </div>
 
               <!-- card footer -->
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              <div class="card-footer" v-show="isLogin">
+                <b-button block variant="success">Add To Cart</b-button>
               </div>
 
             </div>
@@ -54,6 +54,11 @@ import ProductAPI from '@/api/Product.js'
     },
     mounted(){
       this.loadProducts()
+    },
+    computed: {
+      isLogin() {
+        return this.$store.state.user.status.isLogin
+      }
     }
 
   }

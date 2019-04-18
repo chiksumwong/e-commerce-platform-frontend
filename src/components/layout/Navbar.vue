@@ -24,7 +24,34 @@
           <b-nav-form v-show="!isLogin">
             <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register</b-button>
           </b-nav-form>
-          <!-- Using 'button-content' slot -->
+          <!-- Shopping Cart -->
+          <b-nav-item-dropdown right v-show="isLogin">
+            <span slot="button-content"><i class="fas fa-shopping-cart"></i></span>
+
+            <b-dropdown-item class="cart">
+
+              <span class="item">
+                    <span class="item-left" @click="toCart">
+                        <img src="http://lorempixel.com/50/50/" alt="" />
+                        <span class="item-info">
+                            <span>Item name</span>
+                            <span>23$</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn btn-xs btn-danger pull-right">X</button>
+                    </span>
+              </span>
+
+            </b-dropdown-item>
+          
+
+            <b-dropdown-item @click="logout">
+              <b-button block variant="primary">View Cart</b-button>
+            </b-dropdown-item>
+
+          </b-nav-item-dropdown>
+          <!-- User -->
           <b-nav-item-dropdown right v-show="isLogin">
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
@@ -47,6 +74,9 @@
       },
       logout() {
         this.$store.dispatch('user/logout')
+      },
+      toCart(){
+        this.$router.push('/cart')
       }
     },
     computed: {
@@ -60,6 +90,24 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+.cart{
+    min-width:300px;
+}
+.cart .item-left img,
+.cart .item-left span.item-info{
+    float:left;
+}
+.cart .item-left span.item-info{
+    margin-left:10px;   
+}
+.cart .item-left span.item-info span{
+    display:block;
+}
+.cart .item-right{
+    float:right;
+}
+.cart .item-right button{
+    margin-top:5px;
+}
 </style>
