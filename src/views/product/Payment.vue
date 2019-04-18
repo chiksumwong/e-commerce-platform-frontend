@@ -18,6 +18,7 @@
                         <div class="p-3">
 
                             <form role="form">
+
                                 <div class="form-group">
                                     <label for="username">Full name (on the card)</label>
                                     <div class="input-group">
@@ -38,6 +39,7 @@
                                         <input type="text" class="form-control" name="cardNumber" placeholder="">
                                     </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <div class="form-group">
