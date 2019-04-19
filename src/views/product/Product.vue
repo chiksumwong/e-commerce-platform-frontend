@@ -53,7 +53,7 @@
     </div>
     <!-- /.row -->
 
-     <b-button block variant="success" v-show="isLogin">Add To Cart</b-button>
+     <b-button block variant="success" v-show="isLogin" @click="addToCart(product._id)">Add To Cart</b-button>
      
      <br/><br/>
 
@@ -84,6 +84,42 @@ import ProductAPI from '@/api/Product.js'
         } else {
           console.log('Fail', res.err);
         }
+      },
+
+      async addToCart(productId){
+        let userId = this.$store.state.user.user_id
+
+        const res = await ProductAPI.getProductById(productId)
+
+        let productName;
+        let productImage;
+        let sellingPrice;
+
+        if(res.data){
+          productName = res.data.name 
+          productImage = res.data.images[0].path
+          sellingPrice = res.data.selling_price
+        }
+
+        const payload = {
+          user_id: userId,
+          product_id: productId,
+          product_name:productName,
+          product_image:productImage,
+          selling_price:sellingPrice,
+          quantity: 1,
+          is_active: 1
+        }
+
+        console.log("add to cart payload",payload)
+
+        const cart_res = await ProductAPI.addProductToCart(payload)
+
+        if(cart_res.data){
+          console.log("add to cart success", cart_res.data)
+          // update carts
+          this.$store.dispatch('cart/updateCarts', cart_res.data._id);
+        }
       }
     },
     mounted(){
@@ -93,6 +129,9 @@ import ProductAPI from '@/api/Product.js'
       isLogin() {
         return this.$store.state.user.status.isLogin
       }
+    },
+    watch:{
+      '$route': 'loadProduct'
     }
   }
 </script>

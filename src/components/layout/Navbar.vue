@@ -36,13 +36,17 @@
             <b-dropdown-item class="cart" v-for="cart in carts" :key="cart.id">
 
               <span class="item">
-                    <span class="item-left" @click="toCart">
-                        <img :src="cart.product_image" style="width: 70px;height: 50px;" alt="" />
-                        <span class="item-info">
-                            <span>{{cart.product_name}}</span>
-                            <span>${{cart.selling_price}}  x   {{cart.quantity}}</span>
-                        </span>
-                    </span>
+
+                  <router-link :to="{path:'/product/' + cart.product_id}">
+                    <span class="item-left">
+                          <img :src="cart.product_image" style="width: 70px;height: 50px;" alt="" />
+                          <span class="item-info">
+                              <span>{{cart.product_name}}</span>
+                              <span>${{cart.selling_price}}  x   {{cart.quantity}}</span>
+                          </span>
+                      </span>
+                  </router-link>
+                    
                     <span class="item-right">
                         <button class="btn btn-xs btn-danger pull-right">X</button>
                     </span>
