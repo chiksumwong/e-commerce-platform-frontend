@@ -55,19 +55,36 @@ import ProductAPI from '@/api/Product.js'
       async addToCart(productId){
         let userId = this.$store.state.user.user_id
 
-        const payload = {
-          quantity: 1,
-          is_active: 1,
-          product_id: productId,
-          user_id: userId
-        }
+        const res = await ProductAPI.getProductById(productId)
 
-        const res = await ProductAPI.addProductToCart(payload)
+        let productName;
+        let productImage;
+        let sellingPrice;
 
         if(res.data){
-          console.log("add to cart success", res.data)
+          productName = res.data.name 
+          productImage = res.data.images[0].path
+          sellingPrice = res.data.selling_price
+        }
+
+        const payload = {
+          user_id: userId,
+          product_id: productId,
+          product_name:productName,
+          product_image:productImage,
+          selling_price:sellingPrice,
+          quantity: 1,
+          is_active: 1
+        }
+
+        console.log("add to cart payload",payload)
+
+        const cart_res = await ProductAPI.addProductToCart(payload)
+
+        if(cart_res.data){
+          console.log("add to cart success", cart_res.data)
           // update carts
-          this.$store.dispatch('cart/updateCarts', res.data._id);
+          this.$store.dispatch('cart/updateCarts', cart_res.data._id);
         }
       }
     },

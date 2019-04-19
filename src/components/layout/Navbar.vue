@@ -17,6 +17,8 @@
         </b-navbar-nav>
         <!-- Right items -->
         <b-navbar-nav class="ml-auto">
+
+
           <!-- Login and register button -->
           <b-nav-form v-show="!isLogin">
             <b-button size="sm" variant="success" href="/login" class="mr-sm-2" @click="login">Login</b-button>
@@ -24,6 +26,8 @@
           <b-nav-form v-show="!isLogin">
             <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register</b-button>
           </b-nav-form>
+
+
           <!-- Shopping Cart -->
           <b-nav-item-dropdown right v-show="isLogin">
             <span slot="button-content"><i class="fas fa-shopping-cart"></i></span>
@@ -32,10 +36,10 @@
 
               <span class="item">
                     <span class="item-left" @click="toCart">
-                        <img src="http://lorempixel.com/50/50/" alt="" />
+                        <img :src="cart.product_image" style="width: 70px;height: 50px;" alt="" />
                         <span class="item-info">
-                            <span>Item name</span>
-                            <span>23$</span>
+                            <span>{{cart.product_name}}</span>
+                            <span>${{cart.selling_price}}  x   {{cart.quantity}}</span>
                         </span>
                     </span>
                     <span class="item-right">
@@ -54,11 +58,13 @@
             </div>
 
           </b-nav-item-dropdown>
+
           <!-- User -->
           <b-nav-item-dropdown right v-show="isLogin">
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
+
         </b-navbar-nav>
       </b-collapse>
 
@@ -94,6 +100,7 @@
         return this.$store.state.user.username
       },
       carts(){
+        console.log('found carts', this.$store.state.cart.carts)
         return this.$store.state.cart.carts
       }
     }
@@ -102,7 +109,7 @@
 
 <style scoped>
 .cart{
-    min-width:300px;
+    min-width:400px;
 }
 .cart .item-left img,
 .cart .item-left span.item-info{

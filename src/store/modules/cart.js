@@ -15,7 +15,7 @@ export default {
                 const res = await UserAPI.getUserById(userId);
                 if(res.data){
                     console.log('get user by id success', res.data)
-                    commit('updateCarts', res.data.cart)
+                    commit('updateCarts', res.data.carts)
                 }else{
                     console.log("Fail to get user by id")
                 }
