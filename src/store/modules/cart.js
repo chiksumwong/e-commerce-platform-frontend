@@ -8,7 +8,7 @@ export default {
         carts:[]
     },
     actions: {
-        async updateCarts({ commit }, userId){
+        async getCartsByUserId({ commit }, userId){
             if(userId){
                 const res = await UserAPI.getUserById(userId);
                 if(res.data){
@@ -26,12 +26,7 @@ export default {
             commit('clearCarts')
         },
 
-        async removeProduct({commit}, carts, productId){
-
-            const index = carts.indexOf(productId);
-            carts.splice(index, 1);
-
-            console.log("new removed carts", carts)
+        async updateCarts({commit}, carts){
 
             const payload = {
                 carts: carts
@@ -46,7 +41,7 @@ export default {
             }else{
                 console.log("Fail to get user by id")
             }
-        }
+        },
         
     },
     mutations: {

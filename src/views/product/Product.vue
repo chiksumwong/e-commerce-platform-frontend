@@ -52,8 +52,12 @@
 
     </div>
     <!-- /.row -->
-
-     <b-button block variant="success" v-show="isLogin" @click="addToCart(product._id)">Add To Cart</b-button>
+    <b-input-group prepend="Quantity:" class="mt-2" size="lg">
+      <b-form-input class="text-right" v-model="quantity"></b-form-input>
+      <b-input-group-append>
+        <b-button block variant="success" v-show="isLogin" @click="addToCart(product._id, quantity)">Add To Cart</b-button>
+      </b-input-group-append>
+    </b-input-group>
      
      <br/><br/>
 
@@ -70,7 +74,8 @@ import ProductAPI from '@/api/Product.js'
           images:[{
             path:''
           }]
-        }
+        },
+        quantity:1
       }
   },
   methods:{
@@ -86,7 +91,7 @@ import ProductAPI from '@/api/Product.js'
         }
       },
 
-      async addToCart(productId){
+      async addToCart(productId, quantity){
         let userId = this.$store.state.user.user_id
 
         const res = await ProductAPI.getProductById(productId)
@@ -107,7 +112,7 @@ import ProductAPI from '@/api/Product.js'
           product_name:productName,
           product_image:productImage,
           selling_price:sellingPrice,
-          quantity: 1,
+          quantity: quantity,
           is_active: 1
         }
 
@@ -118,7 +123,7 @@ import ProductAPI from '@/api/Product.js'
         if(cart_res.data){
           console.log("add to cart success", cart_res.data)
           // update carts
-          this.$store.dispatch('cart/updateCarts', cart_res.data._id);
+          this.$store.dispatch('cart/getCartsByUserId', cart_res.data._id);
         }
       }
     },

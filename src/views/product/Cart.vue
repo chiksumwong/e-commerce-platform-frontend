@@ -11,19 +11,16 @@
             <div class="card-body">
 
                 <!-- PRODUCT -->
-                <div class="row">
+                <div class="row p-1" v-for="cart in carts" :key="cart.id">
 
                     <!-- Product Image -->
                     <div class="col-12 col-sm-12 col-md-2 text-center">
-                        <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">
+                        <img class="img-responsive" :src="cart.product_image" alt="prewiew" width="120" height="80">
                     </div>
 
                     <!-- Product Name and Description -->
                     <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-                        <h4 class="product-name"><strong>Product Name</strong></h4>
-                        <h4>
-                            <small>Product description</small>
-                        </h4>
+                        <h4 class="product-name"><strong>{{cart.product_name}}</strong></h4>
                     </div>
 
                     <!-- Prices Quantity Delete -->
@@ -31,34 +28,35 @@
 
                         <!-- Prices -->
                         <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 10px">
-                            <h6><strong>25.00 <span class="text-muted">x</span></strong></h6>
+                            <h6><strong>${{cart.selling_price}} <span class="text-muted">X</span></strong></h6>
                         </div>
 
                         <!-- Quantity -->
                         <div class="col-4 col-sm-4 col-md-4">
                             <div class="quantity">
-                                <input type="button" value="+" class="plus">
-                                <input type="text" value="1" class="qty"
-                                    size="4">
-                                <input type="button" value="-" class="minus">
+                                <input type="button" value="+" class="plus" @click="plusProduct(carts, cart.product_id)">
+                                <input type="text" :value="cart.quantity" class="qty" disabled size="4">
+                                <input type="button" value="-" class="minus" @click="minusProduct(carts, cart.product_id)">
                             </div>
                         </div>
 
                         <!-- Delete Button -->
                         <div class="col-2 col-sm-2 col-md-2 text-right">
-                            <button type="button" class="btn btn-outline-danger btn-xs">
+                            <button type="button" class="btn btn-outline-danger btn-xs" @click="removeProductFromCart(carts, cart.product_id)">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                         </div>
 
                     </div>
                 </div>
+
+
                 <hr>
                 <!-- END PRODUCT -->
 
 
                 <div class="float-right" style="margin: 5px">
-                    Total price: <b>HK $50.00</b>
+                    Total price: <b>HK {{total}}</b>
                 </div>
 
             </div>
@@ -77,7 +75,37 @@
 <script>
     export default {
         methods: {
-
+            plusProduct(carts, productId){
+                const index = carts.map(e => e.product_id).indexOf(productId);
+                let quantity = carts[index].quantity
+                carts[index].quantity = quantity + 1
+                this.$store.dispatch('cart/updateCarts', carts)
+            },
+            minusProduct(carts, productId){
+                const index = carts.map(e => e.product_id).indexOf(productId);
+                let quantity = carts[index].quantity
+                carts[index].quantity = quantity - 1
+                this.$store.dispatch('cart/updateCarts', carts)
+            },
+            removeProductFromCart(carts, productId) {
+                const index = carts.map(e => e.product_id).indexOf(productId);
+                carts.splice(index, 1);
+                this.$store.dispatch('cart/updateCarts', carts)
+            }
+        },
+        computed:{
+            carts() {
+                console.log('shopping carts', this.$store.state.cart.carts)
+                return this.$store.state.cart.carts
+            },
+            total(){
+                let sum = 0;
+                let carts = this.$store.state.cart.carts;
+                carts.forEach(cart => {
+                    sum += (parseFloat(cart.selling_price) * parseFloat(cart.quantity));
+                });
+                return sum;
+            }
         }
     }
 </script>

@@ -24,7 +24,7 @@ export default {
                 commit('loginSuccess', res.data);
 
                 // update carts
-                store.dispatch('cart/updateCarts', res.data.user_id);
+                store.dispatch('cart/getCartsByUserId', res.data.user_id);
 
                 router.push('/');
             }else{

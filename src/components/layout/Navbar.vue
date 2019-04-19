@@ -44,8 +44,7 @@
                   </span>
                 </span>
                 <span class="item-right">
-                  <button class="btn btn-xs btn-danger pull-right"
-                    @click="removeProductFromCart(carts, cart.product_id)">X</button>
+                  <button class="btn btn-xs btn-danger pull-right" @click="removeProductFromCart(carts, cart.product_id)">X</button>
                 </span>
               </span>
             </b-dropdown-item>
@@ -95,7 +94,9 @@
         this.$router.push('/product/' + id)
       },
       removeProductFromCart(carts, productId) {
-        this.$store.dispatch('cart/removeProduct', carts, productId)
+        const index = carts.map(e => e.product_id).indexOf(productId);
+        carts.splice(index, 1);
+        this.$store.dispatch('cart/updateCarts', carts)
       }
     },
     computed: {
