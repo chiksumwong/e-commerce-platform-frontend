@@ -25,7 +25,8 @@
             <b-button size="sm" variant="success" href="/login" class="mr-sm-2" @click="login">Login</b-button>
           </b-nav-form>
           <b-nav-form v-show="!isLogin">
-            <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register</b-button>
+            <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register
+            </b-button>
           </b-nav-form>
 
 
@@ -34,26 +35,21 @@
             <span slot="button-content"><i class="fas fa-shopping-cart"></i></span>
 
             <b-dropdown-item class="cart" v-for="cart in carts" :key="cart.id">
-
               <span class="item">
-
-                  <router-link :to="{path:'/product/' + cart.product_id}">
-                    <span class="item-left">
-                          <img :src="cart.product_image" style="width: 70px;height: 50px;" alt="" />
-                          <span class="item-info">
-                              <span>{{cart.product_name}}</span>
-                              <span>${{cart.selling_price}}  x   {{cart.quantity}}</span>
-                          </span>
-                      </span>
-                  </router-link>
-                    
-                    <span class="item-right">
-                        <button class="btn btn-xs btn-danger pull-right">X</button>
-                    </span>
+                <span class="item-left" @click="toProduct(cart.product_id)">
+                  <img :src="cart.product_image" style="width: 70px;height: 50px;" alt="" />
+                  <span class="item-info">
+                    <span>{{cart.product_name}}</span>
+                    <span>${{cart.selling_price}} x {{cart.quantity}}</span>
+                  </span>
+                </span>
+                <span class="item-right">
+                  <button class="btn btn-xs btn-danger pull-right"
+                    @click="removeProductFromCart(carts, cart.product_id)">X</button>
+                </span>
               </span>
-
             </b-dropdown-item>
-          
+
             <b-dropdown-item @click="toCart">
               <b-button block variant="primary" v-if="carts.length > 0">View Cart</b-button>
             </b-dropdown-item>
@@ -79,9 +75,8 @@
 
 <script>
   export default {
-    data(){
-      return{
-      }
+    data() {
+      return {}
     },
     methods: {
       register() {
@@ -93,18 +88,24 @@
       logout() {
         this.$store.dispatch('user/logout')
       },
-      toCart(){
+      toCart() {
         this.$router.push('/cart')
+      },
+      toProduct(id) {
+        this.$router.push('/product/' + id)
+      },
+      removeProductFromCart(carts, productId) {
+        this.$store.dispatch('cart/removeProduct', carts, productId)
       }
     },
     computed: {
       isLogin() {
         return this.$store.state.user.status.isLogin
       },
-      username(){
+      username() {
         return this.$store.state.user.username
       },
-      carts(){
+      carts() {
         console.log('found carts', this.$store.state.cart.carts)
         return this.$store.state.cart.carts
       }
@@ -113,23 +114,28 @@
 </script>
 
 <style scoped>
-.cart{
-    min-width:400px;
-}
-.cart .item-left img,
-.cart .item-left span.item-info{
-    float:left;
-}
-.cart .item-left span.item-info{
-    margin-left:10px;   
-}
-.cart .item-left span.item-info span{
-    display:block;
-}
-.cart .item-right{
-    float:right;
-}
-.cart .item-right button{
-    margin-top:5px;
-}
+  .cart {
+    min-width: 400px;
+  }
+
+  .cart .item-left img,
+  .cart .item-left span.item-info {
+    float: left;
+  }
+
+  .cart .item-left span.item-info {
+    margin-left: 10px;
+  }
+
+  .cart .item-left span.item-info span {
+    display: block;
+  }
+
+  .cart .item-right {
+    float: right;
+  }
+
+  .cart .item-right button {
+    margin-top: 5px;
+  }
 </style>
