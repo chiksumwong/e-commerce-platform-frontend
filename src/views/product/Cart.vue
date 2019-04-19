@@ -85,7 +85,11 @@
                 const index = carts.map(e => e.product_id).indexOf(productId);
                 let quantity = carts[index].quantity
                 carts[index].quantity = quantity - 1
-                this.$store.dispatch('cart/updateCarts', carts)
+                if( carts[index].quantity == 0){
+                    this.removeProductFromCart(carts, productId)
+                }else{
+                    this.$store.dispatch('cart/updateCarts', carts)
+                }
             },
             removeProductFromCart(carts, productId) {
                 const index = carts.map(e => e.product_id).indexOf(productId);
@@ -105,6 +109,13 @@
                     sum += (parseFloat(cart.selling_price) * parseFloat(cart.quantity));
                 });
                 return sum;
+            }
+        },
+        watch:{
+            carts(){
+                if (this.$store.state.cart.carts.length < 1){
+                    this.$router.push('/')
+                }
             }
         }
     }
