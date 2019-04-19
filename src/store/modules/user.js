@@ -2,15 +2,15 @@ import UserAPI from '@/api/User'
 import {router} from '@/router'
 import {store} from '@/store'
 
-const user = JSON.parse(localStorage.getItem('user'));
-
-const initialState = user
-    ? { status: { isLogin: true }, username:user.user_name, user_id:user.user_id }
-    : { status: {}, username: null, user_id:null };
-
 export default {
     namespaced: true,
-    state: initialState,
+    state: {
+        status:{
+            isLogin:false
+        },
+        username:null,
+        user_id:null
+    },
     actions: {
 
         async login({ commit }, payload) {
@@ -20,7 +20,7 @@ export default {
 
             if (res.data){
                 console.log('login success', res.data);
-                localStorage.setItem('user', JSON.stringify(res.data));
+                localStorage.setItem('token', res.data.token);
                 commit('loginSuccess', res.data);
 
                 // update carts
@@ -34,8 +34,9 @@ export default {
         },
 
         logout({ commit }) {
-            localStorage.removeItem('user');
+            localStorage.removeItem('token');
             commit('logout');
+            store.dispatch('cart/clearCarts');
             router.push('/');
         }
 
@@ -52,7 +53,8 @@ export default {
             state.user_id = null;
         },
         logout(state) {
-            state.username = { isLogin: false };
+            state.status = { isLogin: false };
+            state.username = null;
             state.user_id = null;
         }
     }

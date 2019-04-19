@@ -15,9 +15,10 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
         </b-navbar-nav>
+
+
         <!-- Right items -->
         <b-navbar-nav class="ml-auto">
-
 
           <!-- Login and register button -->
           <b-nav-form v-show="!isLogin">
