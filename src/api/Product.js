@@ -1,6 +1,7 @@
 import Vue from 'vue'    
     
 const ProductAPI = {
+    createProduct: (payload) => Vue.prototype.$axios.post('/product', payload),
     getAllProduct: () => Vue.prototype.$axios.get('/products'),
     getProductById: (productId) => Vue.prototype.$axios.get('/product/' + productId),
     addProductToCart: (payload) => Vue.prototype.$axios.post('/cart', payload),
