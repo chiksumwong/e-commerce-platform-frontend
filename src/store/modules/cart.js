@@ -5,7 +5,8 @@ import {store} from '@/store'
 export default {
     namespaced: true,
     state: {
-        carts:[]
+        carts:[],
+        total:0
     },
     actions: {
         async getCartsByUserId({ commit }, userId){
@@ -23,6 +24,7 @@ export default {
         },
 
         clearCarts({commit}){
+            store.dispatch('cart/updateCarts', []);
             commit('clearCarts')
         },
 
@@ -42,6 +44,15 @@ export default {
                 console.log("Fail to get user by id")
             }
         },
+
+        updateTotal({commit}){
+            let sum = 0;
+                let carts = store.state.cart.carts;
+                carts.forEach(cart => {
+                    sum += (parseFloat(cart.selling_price) * parseFloat(cart.quantity));
+            });
+            commit('updateTotal', sum)
+        }
         
     },
     mutations: {
@@ -49,7 +60,11 @@ export default {
             state.carts = carts
         },
         clearCarts(state){
-            state.carts = []
+            state.carts = [],
+            state.total = 0
+        },
+        updateTotal(state, total){
+            state.total = total
         }
     }
 }

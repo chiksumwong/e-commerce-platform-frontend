@@ -66,7 +66,7 @@
 </template>
 
 <script>
-  import UserAPI from '@/api/User.js'
+  import UserAPI from '@/api/User'
 
   export default {
     data() {

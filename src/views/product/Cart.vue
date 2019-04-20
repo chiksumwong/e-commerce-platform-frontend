@@ -103,12 +103,8 @@
                 return this.$store.state.cart.carts
             },
             total(){
-                let sum = 0;
-                let carts = this.$store.state.cart.carts;
-                carts.forEach(cart => {
-                    sum += (parseFloat(cart.selling_price) * parseFloat(cart.quantity));
-                });
-                return sum;
+                this.$store.dispatch('cart/updateTotal')
+                return this.$store.state.cart.total;
             }
         },
         watch:{

@@ -42,41 +42,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="col-md-9"><em>Baked Rodopa Sheep Feta</em></h4>
+
+
+                                <tr v-for="cart in cartsWithSubTotal" :key="cart.id">
+                                    <td class="col-md-9"><h4><em>{{cart.cart.product_name}}</em></h4>
                                     </td>
-                                    <td class="col-md-1" style="text-align: center"> 2 </td>
-                                    <td class="col-md-1 text-center">$13</td>
-                                    <td class="col-md-1 text-center">$26</td>
+                                    <td class="col-md-1" style="text-align: center"> {{cart.cart.quantity}} </td>
+                                    <td class="col-md-1 text-center">{{cart.cart.selling_price}}</td>
+                                    <td class="col-md-1 text-center">{{cart.subtotal}}</td>
                                 </tr>
-                                <tr>
-                                    <td class="col-md-9"><em>Lebanese Cabbage Salad</em></h4>
-                                    </td>
-                                    <td class="col-md-1" style="text-align: center"> 1 </td>
-                                    <td class="col-md-1 text-center">$8</td>
-                                    <td class="col-md-1 text-center">$8</td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-9"><em>Baked Tart with Thyme and Garlic</em></h4>
-                                    </td>
-                                    <td class="col-md-1" style="text-align: center"> 3 </td>
-                                    <td class="col-md-1 text-center">$16</td>
-                                    <td class="col-md-1 text-center">$48</td>
-                                </tr>
-                                <tr>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td class="text-right">
-                                        <p>
-                                            <strong>Subtotal: </strong>
-                                        </p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p>
-                                            <strong>$6.94</strong>
-                                        </p>
-                                    </td>
-                                </tr>
+
+
                                 <tr>
                                     <td>   </td>
                                     <td>   </td>
@@ -84,9 +60,10 @@
                                         <h4><strong>Total: </strong></h4>
                                     </td>
                                     <td class="text-center text-danger">
-                                        <h4><strong>$31.53</strong></h4>
+                                        <h4><strong>${{total}}</strong></h4>
                                     </td>
                                 </tr>
+
                             </tbody>
                         </table>
 
@@ -104,7 +81,22 @@
     export default {
         methods:{
             goHome(){
+                this.$store.dispatch('cart/clearCarts')
                 this.$router.push('/')
+            },
+            computeSubTotal(cart) {
+                return cart.selling_price * cart.quantity;
+            },
+        },
+        computed:{
+            cartsWithSubTotal() {
+                return this.$store.state.cart.carts.map(cart => ({
+                    cart,
+                    subtotal: this.computeSubTotal(cart)
+                }))
+            },
+            total(){
+                return this.$store.state.cart.total
             }
         }
     }
