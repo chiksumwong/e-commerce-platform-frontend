@@ -70,6 +70,9 @@ export default {
   },
   mounted() {
     this.loadOrders();
+    this.$root.$on('statesChanged', () =>{
+      this.loadOrders();
+    })
   }
 };
 </script>

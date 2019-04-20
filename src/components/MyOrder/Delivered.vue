@@ -72,6 +72,7 @@ export default {
       const res = await OrderAPI.updateOrderStates(productId, payload);
 
       if(res.data){
+        this.$root.$emit('statesChanged')
         this.loadOrders();
       }
     }
