@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <b-table striped hover :fields="fields" :items="orders"></b-table>
+ <div>
+    <b-table striped hover :fields="fields" :items="orders" v-if="orders.length > 0"></b-table>
+
+    <b-card class="text-center" v-if="orders.length < 1">
+      <div class="bg-secondary text-light">Not Any Order !</div>
+    </b-card>
   </div>
 </template>
 

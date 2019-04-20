@@ -1,10 +1,14 @@
 <template>
   <div>
-    <b-table striped hover :fields="fields" :items="orders">
+    <b-table striped hover :fields="fields" :items="orders" v-if="orders.length > 0">
       <template slot="actions" slot-scope="row">
         <b-button size="sm" @click="updateOrderStates(row.item)" class="mr-1">Receipt</b-button>
       </template>
     </b-table>
+
+    <b-card class="text-center" v-if="orders.length < 1">
+      <div class="bg-secondary text-light">Not Any Order !</div>
+    </b-card>
   </div>
 </template>
 
