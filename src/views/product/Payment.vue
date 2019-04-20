@@ -233,6 +233,7 @@ export default {
         obj.product_name = cart.product_name;
         obj.quantity = cart.quantity;
         obj.seller = cart.seller;
+        obj.order_states = 1;
         product_info.push(obj);
       });
 
@@ -249,8 +250,7 @@ export default {
         address: address,
         phone_number: phone_number,
         buyer: buyer_id,
-        payment_method: 1,
-        order_states: 1
+        payment_method: 1
       };
       const res = await OrderAPI.addOrder(payload);
       if (res.data) {

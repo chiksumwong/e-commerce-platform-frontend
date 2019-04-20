@@ -56,7 +56,7 @@ export default {
       const res = await ProductAPI.getProductByUserId(user_id);
 
       if (res.data) {
-        console.log("load products by user id success", res.data);
+        // console.log("load products by user id success", res.data);
 
         this.products = res.data;
       } else {
