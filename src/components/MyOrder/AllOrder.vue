@@ -1,18 +1,6 @@
 <template>
   <div>
-    <!-- <b-table striped hover :items="orders"></b-table> -->
-
-    <div v-for="order in orders" :key="order.id">
-      <div v-for="product in order.products" :key="product.id">
-        <p>Product Name: {{product.product_name}}</p>
-        <p>Quantity: {{product.quantity}}</p>
-        <P>Address : {{order.address}}</P>
-        <P>Addressee: {{order.addressee}}</P>
-        <P>Phone Number :{{order.phone_number}}</P>
-        <P>Order States :{{orderStates(product.order_states)}}</P>
-        <hr>
-      </div>
-    </div>
+    <b-table striped hover :fields="fields" :items="orders"></b-table>
   </div>
 </template>
 
@@ -22,7 +10,24 @@ import OrderAPI from "@/api/Order";
 export default {
   data() {
     return {
-      orders: []
+      orders: [],
+      fields: [
+        "product_name",
+        "quantity",
+        {
+          key: "order_states",
+          label: "States",
+          formatter: value => {
+            if (value == 1) {
+              return "Processing";
+            } else if (value == 2) {
+              return "Delivered";
+            } else {
+              return "Receipted";
+            }
+          }
+        }
+      ]
     };
   },
   methods: {
@@ -36,18 +41,17 @@ export default {
         //   res.data
         // );
 
-        this.orders = res.data;
+        let products = [];
+
+        res.data.forEach(order => {
+          order.products.forEach(product => {
+            products.push(product);
+          });
+        });
+
+        this.orders = products;
       } else {
         console.log("Fail", res.err);
-      }
-    },
-    orderStates(statesNumber) {
-      if (statesNumber == 1) {
-        return "Processing";
-      } else if (statesNumber == 2) {
-        return "Delivered";
-      } else {
-        return "Receipted";
       }
     }
   },

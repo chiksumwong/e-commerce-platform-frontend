@@ -27,16 +27,11 @@
         </div>
         <!-- Delete Button -->
         <div class="col-2 col-sm-2 col-md-2 text-right">
-          <button
-            type="button"
-            class="btn btn-outline-danger btn-xs"
-            @click="deleteProduct()"
-          >
+          <button type="button" class="btn btn-outline-danger btn-xs" @click="deleteProduct()">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </button>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -63,9 +58,7 @@ export default {
         console.log("Fail", res.err);
       }
     },
-    deleteProduct(){
-      
-    }
+    deleteProduct() {}
   },
   mounted() {
     this.loadProducts();

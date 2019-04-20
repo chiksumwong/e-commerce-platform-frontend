@@ -96,25 +96,25 @@ export default {
   },
   methods: {
     async createProduct() {
-        let user_id = this.$store.state.user.user_id
+      let user_id = this.$store.state.user.user_id;
 
-         const payload = {
-          name: this.name,
-          description: this.description,
-          selling_price: this.price,
-          marked_price: this.price,
-          seller: user_id,
-          images:[{path:this.image}]
-        }
+      const payload = {
+        name: this.name,
+        description: this.description,
+        selling_price: this.price,
+        marked_price: this.price,
+        seller: user_id,
+        images: [{ path: this.image }]
+      };
 
-        const res = await ProductAPI.createProduct(payload)
+      const res = await ProductAPI.createProduct(payload);
 
-        if (res.data) {
-          console.log("create product success", res.data)
-          this.$router.push('/')
-        } else {
-          console.log('Fail', res.err);
-        }
+      if (res.data) {
+        console.log("create product success", res.data);
+        this.$router.push("/");
+      } else {
+        console.log("Fail", res.err);
+      }
     }
   }
 };
