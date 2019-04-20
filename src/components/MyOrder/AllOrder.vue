@@ -1,11 +1,16 @@
 <template>
   <div>
-    <div class="row p-1" v-for="order in orders" :key="order.id">
-      <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-        <h4 class="product-name">
-          <strong>{{order.address}}</strong>
-        </h4>
+    <div v-for="order in orders" :key="order.id">
+      <div v-for="product in order.products" :key="product.id">
+          <p>Product Name: {{product.product_name}}</p>
+          <p>Quantity: {{product.quantity}}</p>
+          <P>Address : {{order.address}}</P>
+          <P>Addressee: {{order.addressee}}</P>
+          <P>Phone Number :{{order.phone_number}}</P>
+          <P>Order States :{{orderStates(order.order_states)}}</P>
+          <hr/>
       </div>
+          
     </div>
   </div>
 </template>
@@ -30,6 +35,15 @@ export default {
         this.orders = res.data;
       } else {
         console.log("Fail", res.err);
+      }
+    },
+    orderStates(statesNumber){
+      if(statesNumber == 1){
+        return "Processing"
+      }else if(statesNumber == 2){
+        return "Delivered"
+      }else{
+        return "Receipted"
       }
     }
   },

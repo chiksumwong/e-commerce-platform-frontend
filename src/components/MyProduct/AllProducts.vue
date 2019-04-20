@@ -13,7 +13,9 @@
 
       <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
         <h4 class="product-name">
-          <strong>{{product.name}}</strong>
+          <router-link :to="{ path: '/product/' + product._id }">
+            <strong>{{product.name}}</strong>
+          </router-link>
         </h4>
       </div>
 
@@ -23,7 +25,18 @@
             <strong>${{product.selling_price}}</strong>
           </h6>
         </div>
+        <!-- Delete Button -->
+        <div class="col-2 col-sm-2 col-md-2 text-right">
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-xs"
+            @click="deleteProduct()"
+          >
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -34,7 +47,7 @@ import ProductAPI from "@/api/Product";
 export default {
   data() {
     return {
-      products: [{images: [{path: ""}]}]
+      products: [{ images: [{ path: "" }] }]
     };
   },
   methods: {
@@ -49,6 +62,9 @@ export default {
       } else {
         console.log("Fail", res.err);
       }
+    },
+    deleteProduct(){
+      
     }
   },
   mounted() {

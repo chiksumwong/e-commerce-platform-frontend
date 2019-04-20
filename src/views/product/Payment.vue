@@ -10,6 +10,26 @@
 
       <div class="card-body">
         <form role="form">
+
+          <div class="form-group">
+            <label for="address">Delivery Addressee</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                name="address"
+                v-model="addressee"
+                placeholder
+                required
+              >
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="address">Delivery Address</label>
             <div class="input-group">
@@ -192,6 +212,7 @@ export default {
         { value: "2022", text: "2022" }
       ],
       phone: "",
+      addressee: "",
       address: ""
     };
   },
@@ -202,40 +223,43 @@ export default {
     },
 
     async addOrder() {
-      const carts = this.$store.state.cart.carts
+      const carts = this.$store.state.cart.carts;
 
-      const product_info = []
+      const product_info = [];
 
       carts.forEach(cart => {
-          let obj = {}
-          obj.product_id = cart.product_id
-          obj.quantity = cart.quantity
-          obj.seller = cart.seller
-          product_info.push(obj)
+        let obj = {};
+        obj.product_id = cart.product_id;
+        obj.product_name = cart.product_name;
+        obj.quantity = cart.quantity;
+        obj.seller = cart.seller;
+        product_info.push(obj);
       });
 
-      let address = this.address
-      let phone_number = this.phone
-      let total = this.$store.state.cart.total
-      let buyer_id = this.$store.state.user.user_id
+      let addressee = this.addressee;
+      let address = this.address;
+      let phone_number = this.phone;
+      let total = this.$store.state.cart.total;
+      let buyer_id = this.$store.state.user.user_id;
 
       const payload = {
-          products:product_info,
-          total_amount: total,
-          address: address,
-          phone_number: phone_number,
-          buyer: buyer_id,
-          payment_method:1,
-          order_states:1
-      }
-      const res = await OrderAPI.addOrder(payload)
+        products: product_info,
+        total_amount: total,
+        addressee: addressee,
+        address: address,
+        phone_number: phone_number,
+        buyer: buyer_id,
+        payment_method: 1,
+        order_states: 1
+      };
+      const res = await OrderAPI.addOrder(payload);
       if (res.data) {
-          console.log("order create success", res.data)
-          this.$store.dispatch("payment/updatePayment", carts);
-          this.$store.dispatch("payment/updateTotal", total);
-          this.$store.dispatch("cart/clearCarts");
+        console.log("order create success", res.data);
+        this.$store.dispatch("payment/updatePayment", carts);
+        this.$store.dispatch("payment/updateTotal", total);
+        this.$store.dispatch("cart/clearCarts");
       } else {
-          console.log('Fail', res.err);
+        console.log("Fail", res.err);
       }
     }
   }
