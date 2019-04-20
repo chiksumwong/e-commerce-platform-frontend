@@ -202,15 +202,15 @@ export default {
     },
 
     async addOrder() {
-      let carts = this.$store.state.cart.carts
+      const carts = this.$store.state.cart.carts
 
       const product_info = []
 
       carts.forEach(cart => {
           let obj = {}
           obj.product_id = cart.product_id
-          obj.quntity = cart.quantity
-          obj.seller_id = cart.seller
+          obj.quantity = cart.quantity
+          obj.seller = cart.seller
           product_info.push(obj)
       });
 
@@ -231,6 +231,9 @@ export default {
       const res = await OrderAPI.addOrder(payload)
       if (res.data) {
           console.log("order create success", res.data)
+          this.$store.dispatch("payment/updatePayment", carts);
+          this.$store.dispatch("payment/updateTotal", total);
+          this.$store.dispatch("cart/clearCarts");
       } else {
           console.log('Fail', res.err);
       }

@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import ProductAPI from '@/api/Product.js'
+import ProductAPI from '@/api/Product'
   export default {
   data() {
       return {

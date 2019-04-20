@@ -93,10 +93,10 @@
         this.$router.push('/cart')
       },
       toMyOrders() {
-        this.$router.push('/myorders')
+        this.$router.push('/myorder')
       },
       toMyProducts() {
-        this.$router.push('/myproducts')
+        this.$router.push('/myproduct')
       },
       toProduct(id) {
         this.$router.push('/product/' + id)
