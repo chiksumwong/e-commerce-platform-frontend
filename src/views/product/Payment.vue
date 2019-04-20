@@ -202,39 +202,38 @@ export default {
     },
 
     async addOrder() {
+      let carts = this.$store.state.cart.carts
 
-        let address = this.address
-        let phone_number = this.phone
-        
-      // let carts = this.$store.state.cart.carts
-      // const product_info = []
-      // let seller_id = ""
-      // carts.forEach(cart => {
-      //     let obj = {}
-      //     obj.product_id = cart.product_id
-      //     obj.quntity = cart.quntity
-      //     product_info.push(obj)
-      //     const product_res = await ProductAPI.getProductById(cart.product_id)
-      //     if(product_res.data){
-      //         seller_id = product_res.data.seller
-      //     }
-      //     let buyer_id = this.$store.state.user.user_id
-      //     let total = this.$store.state.cart.total
-      // });
-      // const payload = {
-      //     seller: seller_id,
-      //     buyer: buyer_id,
-      //     products:product_info,
-      //     total_amount: total,
-      //     payment_method:1,
-      //     order_startes:1
-      // }
-      // const res = await OrderAPI.addOrder(payload)
-      // if (res.data) {
-      //     console.log("order create success", res.data)
-      // } else {
-      //     console.log('Fail', res.err);
-      // }
+      const product_info = []
+
+      carts.forEach(cart => {
+          let obj = {}
+          obj.product_id = cart.product_id
+          obj.quntity = cart.quantity
+          obj.seller_id = cart.seller
+          product_info.push(obj)
+      });
+
+      let address = this.address
+      let phone_number = this.phone
+      let total = this.$store.state.cart.total
+      let buyer_id = this.$store.state.user.user_id
+
+      const payload = {
+          products:product_info,
+          total_amount: total,
+          address: address,
+          phone_number: phone_number,
+          buyer: buyer_id,
+          payment_method:1,
+          order_states:1
+      }
+      const res = await OrderAPI.addOrder(payload)
+      if (res.data) {
+          console.log("order create success", res.data)
+      } else {
+          console.log('Fail', res.err);
+      }
     }
   }
 };

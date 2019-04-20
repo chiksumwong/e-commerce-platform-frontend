@@ -62,6 +62,8 @@
           <!-- User -->
           <b-nav-item-dropdown right v-show="isLogin">
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
+            <b-dropdown-item @click="toMyOrders">My Orders</b-dropdown-item>
+            <b-dropdown-item @click="toMyProducts">My Products</b-dropdown-item>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
 
@@ -89,6 +91,12 @@
       },
       toCart() {
         this.$router.push('/cart')
+      },
+      toMyOrders() {
+        this.$router.push('/myorders')
+      },
+      toMyProducts() {
+        this.$router.push('/myproducts')
       },
       toProduct(id) {
         this.$router.push('/product/' + id)

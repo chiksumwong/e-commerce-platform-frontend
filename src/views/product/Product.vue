@@ -96,14 +96,16 @@ import ProductAPI from '@/api/Product.js'
 
         const res = await ProductAPI.getProductById(productId)
 
-        let productName;
-        let productImage;
-        let sellingPrice;
+        let productName = ""
+        let productImage = ""
+        let sellingPrice = 0
+        let seller = ""
 
         if(res.data){
           productName = res.data.name 
           productImage = res.data.images[0].path
           sellingPrice = res.data.selling_price
+          seller = res.data.seller
         }
 
         const payload = {
@@ -112,6 +114,7 @@ import ProductAPI from '@/api/Product.js'
           product_name:productName,
           product_image:productImage,
           selling_price:sellingPrice,
+          seller: seller,
           quantity: quantity,
           is_active: 1
         }
