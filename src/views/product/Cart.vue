@@ -4,7 +4,7 @@
 
             <div class="card-header bg-primary text-light">
                 <i class="fa fa-shopping-cart"></i>
-                Shipping cart
+                Shipping Cart
             </div>
 
 

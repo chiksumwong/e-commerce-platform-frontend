@@ -19,7 +19,7 @@
               <em>Date: 20th April, 2019</em>
             </p>
             <p>
-              <em>Receipt #: 34522677W</em>
+              <em>Ref #: 34522677W</em>
             </p>
           </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="text-center">
-              <h1>Receipt</h1>
+              <h1>Payemnt Completed !</h1>
             </div>
 
             <table class="table table-hover">
