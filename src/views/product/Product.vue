@@ -52,8 +52,12 @@
 
     </div>
     <!-- /.row -->
-
-     <b-button block variant="success" v-show="isLogin">Add To Cart</b-button>
+    <b-input-group prepend="Quantity:" class="mt-2" size="lg">
+      <b-form-input class="text-right" v-model="quantity"></b-form-input>
+      <b-input-group-append>
+        <b-button block variant="success" v-show="isLogin" @click="addToCart(product._id, quantity)">Add To Cart</b-button>
+      </b-input-group-append>
+    </b-input-group>
      
      <br/><br/>
 
@@ -62,7 +66,7 @@
 </template>
 
 <script>
-import ProductAPI from '@/api/Product.js'
+import ProductAPI from '@/api/Product'
   export default {
   data() {
       return {
@@ -70,7 +74,8 @@ import ProductAPI from '@/api/Product.js'
           images:[{
             path:''
           }]
-        }
+        },
+        quantity:1
       }
   },
   methods:{
@@ -84,6 +89,45 @@ import ProductAPI from '@/api/Product.js'
         } else {
           console.log('Fail', res.err);
         }
+      },
+
+      async addToCart(productId, quantity){
+        let userId = this.$store.state.user.user_id
+
+        const res = await ProductAPI.getProductById(productId)
+
+        let productName = ""
+        let productImage = ""
+        let sellingPrice = 0
+        let seller = ""
+
+        if(res.data){
+          productName = res.data.name 
+          productImage = res.data.images[0].path
+          sellingPrice = res.data.selling_price
+          seller = res.data.seller
+        }
+
+        const payload = {
+          user_id: userId,
+          product_id: productId,
+          product_name:productName,
+          product_image:productImage,
+          selling_price:sellingPrice,
+          seller: seller,
+          quantity: quantity,
+          is_active: 1
+        }
+
+        console.log("add to cart payload",payload)
+
+        const cart_res = await ProductAPI.addProductToCart(payload)
+
+        if(cart_res.data){
+          console.log("add to cart success", cart_res.data)
+          // update carts
+          this.$store.dispatch('cart/getCartsByUserId', cart_res.data._id);
+        }
       }
     },
     mounted(){
@@ -93,6 +137,9 @@ import ProductAPI from '@/api/Product.js'
       isLogin() {
         return this.$store.state.user.status.isLogin
       }
+    },
+    watch:{
+      '$route': 'loadProduct'
     }
   }
 </script>

@@ -15,47 +15,58 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
         </b-navbar-nav>
+
+
         <!-- Right items -->
         <b-navbar-nav class="ml-auto">
+
           <!-- Login and register button -->
           <b-nav-form v-show="!isLogin">
             <b-button size="sm" variant="success" href="/login" class="mr-sm-2" @click="login">Login</b-button>
           </b-nav-form>
           <b-nav-form v-show="!isLogin">
-            <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register</b-button>
+            <b-button size="sm" variant="success" href="/register" class="my-2 my-sm-0" @click="register">Register
+            </b-button>
           </b-nav-form>
+
+
           <!-- Shopping Cart -->
           <b-nav-item-dropdown right v-show="isLogin">
             <span slot="button-content"><i class="fas fa-shopping-cart"></i></span>
 
-            <b-dropdown-item class="cart">
-
+            <b-dropdown-item class="cart" v-for="cart in carts" :key="cart.id">
               <span class="item">
-                    <span class="item-left" @click="toCart">
-                        <img src="http://lorempixel.com/50/50/" alt="" />
-                        <span class="item-info">
-                            <span>Item name</span>
-                            <span>23$</span>
-                        </span>
-                    </span>
-                    <span class="item-right">
-                        <button class="btn btn-xs btn-danger pull-right">X</button>
-                    </span>
+                <span class="item-left" @click="toProduct(cart.product_id)">
+                  <img :src="cart.product_image" style="width: 70px;height: 50px;" alt="" />
+                  <span class="item-info">
+                    <span>{{cart.product_name}}</span>
+                    <span>${{cart.selling_price}} x {{cart.quantity}}</span>
+                  </span>
+                </span>
+                <span class="item-right">
+                  <button class="btn btn-xs btn-danger pull-right" @click="removeProductFromCart(carts, cart.product_id)">X</button>
+                </span>
               </span>
-
             </b-dropdown-item>
-          
 
             <b-dropdown-item @click="toCart">
-              <b-button block variant="primary">View Cart</b-button>
+              <b-button block variant="primary" v-if="carts.length > 0">View Cart</b-button>
             </b-dropdown-item>
 
+            <div class="text-center" v-if="carts.length < 1">
+              <p>Nothing in Cart</p>
+            </div>
+
           </b-nav-item-dropdown>
+
           <!-- User -->
           <b-nav-item-dropdown right v-show="isLogin">
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
+            <b-dropdown-item @click="toMyOrders">My Orders</b-dropdown-item>
+            <b-dropdown-item @click="toMyProducts">My Products</b-dropdown-item>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
+
         </b-navbar-nav>
       </b-collapse>
 
@@ -65,6 +76,9 @@
 
 <script>
   export default {
+    data() {
+      return {}
+    },
     methods: {
       register() {
         this.$router.push('/register')
@@ -75,39 +89,62 @@
       logout() {
         this.$store.dispatch('user/logout')
       },
-      toCart(){
+      toCart() {
         this.$router.push('/cart')
+      },
+      toMyOrders() {
+        this.$router.push('/myorder')
+      },
+      toMyProducts() {
+        this.$router.push('/myproduct')
+      },
+      toProduct(id) {
+        this.$router.push('/product/' + id)
+      },
+      removeProductFromCart(carts, productId) {
+        const index = carts.map(e => e.product_id).indexOf(productId);
+        carts.splice(index, 1);
+        this.$store.dispatch('cart/updateCarts', carts)
       }
     },
     computed: {
       isLogin() {
         return this.$store.state.user.status.isLogin
       },
-      username(){
+      username() {
         return this.$store.state.user.username
+      },
+      carts() {
+        console.log('found carts', this.$store.state.cart.carts)
+        return this.$store.state.cart.carts
       }
     }
   }
 </script>
 
 <style scoped>
-.cart{
-    min-width:300px;
-}
-.cart .item-left img,
-.cart .item-left span.item-info{
-    float:left;
-}
-.cart .item-left span.item-info{
-    margin-left:10px;   
-}
-.cart .item-left span.item-info span{
-    display:block;
-}
-.cart .item-right{
-    float:right;
-}
-.cart .item-right button{
-    margin-top:5px;
-}
+  .cart {
+    min-width: 400px;
+  }
+
+  .cart .item-left img,
+  .cart .item-left span.item-info {
+    float: left;
+  }
+
+  .cart .item-left span.item-info {
+    margin-left: 10px;
+  }
+
+  .cart .item-left span.item-info span {
+    display: block;
+  }
+
+  .cart .item-right {
+    float: right;
+  }
+
+  .cart .item-right button {
+    margin-top: 5px;
+  }
 </style>

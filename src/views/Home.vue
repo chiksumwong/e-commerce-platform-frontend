@@ -4,7 +4,7 @@
         <!-- Product Items -->
         <div class="row">
 
-          <div v-for="product in products" class="col-lg-4 col-md-6 mb-3">
+          <div v-for="product in products" :key="product.id" class="col-lg-4 col-md-6 mb-3">
             <div class="card">
 
               <!-- image -->
@@ -15,13 +15,11 @@
                 <h4 class="card-title">
                   <a :href="'/product/'+product._id">{{product.name}}</a>
                 </h4>
-                <h5>{{product.selling_price}}</h5>
                 <p class="card-text">{{product.description}}</p>
               </div>
-
               <!-- card footer -->
               <div class="card-footer" v-show="isLogin">
-                <b-button block variant="success">Add To Cart</b-button>
+                <h5>$ {{product.selling_price}}</h5>
               </div>
 
             </div>
@@ -32,7 +30,7 @@
 </template>
 
 <script>
-import ProductAPI from '@/api/Product.js'
+import ProductAPI from '@/api/Product'
   export default {
     data() {
       return {

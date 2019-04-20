@@ -1,15 +1,16 @@
 import UserAPI from '@/api/User'
 import {router} from '@/router'
-
-const user = JSON.parse(localStorage.getItem('user'));
-
-const initialState = user
-    ? { status: { isLogin: true }, username:user.user_name }
-    : { status: {}, username: null };
+import {store} from '@/store'
 
 export default {
     namespaced: true,
-    state: initialState,
+    state: {
+        status:{
+            isLogin:false
+        },
+        username:null,
+        user_id:null
+    },
     actions: {
 
         async login({ commit }, payload) {
@@ -19,8 +20,12 @@ export default {
 
             if (res.data){
                 console.log('login success', res.data);
-                localStorage.setItem('user', JSON.stringify(res.data));
+                localStorage.setItem('token', res.data.token);
                 commit('loginSuccess', res.data);
+
+                // update carts
+                store.dispatch('cart/getCartsByUserId', res.data.user_id);
+
                 router.push('/');
             }else{
                 commit('loginFailure');
@@ -29,8 +34,9 @@ export default {
         },
 
         logout({ commit }) {
-            localStorage.removeItem('user');
+            localStorage.removeItem('token');
             commit('logout');
+            store.dispatch('cart/clearCarts');
             router.push('/');
         }
 
@@ -39,14 +45,17 @@ export default {
         loginSuccess(state, user) {
             state.status = { isLogin: true };
             state.username = user.user_name;
+            state.user_id = user.user_id;
         },
         loginFailure(state) {
             state.status = { isLogin: false };
-            state.user = null;
+            state.username = null;
+            state.user_id = null;
         },
         logout(state) {
             state.status = { isLogin: false };
-            state.user = null;
+            state.username = null;
+            state.user_id = null;
         }
     }
 }

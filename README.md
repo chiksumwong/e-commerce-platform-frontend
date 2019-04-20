@@ -32,3 +32,9 @@ npm run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Project Detail
+
+- Use localStorage to storage jwt-token from backend
+
+- Use vuex with vuex-persistedstate to store user status, user info, shopping cart

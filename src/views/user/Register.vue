@@ -66,7 +66,7 @@
 </template>
 
 <script>
-  import UserAPI from '@/api/User.js'
+  import UserAPI from '@/api/User'
 
   export default {
     data() {
@@ -111,11 +111,8 @@
 <style scoped>
   .card {
     margin: 0 auto;
-    /* Added */
     float: none;
-    /* Added */
     margin-bottom: 10px;
-    /* Added */
   }
   i {
     margin-right: 10px;
