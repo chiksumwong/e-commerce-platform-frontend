@@ -38,6 +38,17 @@ Vue.prototype.$axios = instance ;
 import Notifications from 'vue-notification'
 Vue.use(Notifications)
 
+// // // image upload
+// // import {CldContext, CldImage, CldVideo, CldTransformation} from 'cloudinary-vue';
+// import Cloudinary from 'cloudinary-vue';
+// Vue.use(Cloudinary, {
+//   configuration: {
+//     cloudName: "dvfyipg5k"
+//   }
+// });
+
+
+
 new Vue({
   router,
   store,

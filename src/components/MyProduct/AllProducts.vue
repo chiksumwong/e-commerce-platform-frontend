@@ -26,9 +26,16 @@
               <strong>${{product.selling_price}}</strong>
             </h6>
           </div>
+           <!-- Update Button -->
+          <div class="col-2 col-sm-2 col-md-2 text-right">
+            <button type="button" class="btn btn-outline-success btn-xs" @click="toUpdateProduct(product._id)">
+              <i class="fas fa-edit" aria-hidden="true"></i>
+            </button>
+          </div>
+
           <!-- Delete Button -->
           <div class="col-2 col-sm-2 col-md-2 text-right">
-            <button type="button" class="btn btn-outline-danger btn-xs" @click="deleteProduct()">
+            <button type="button" class="btn btn-outline-danger btn-xs" @click="deleteProduct(product._id)">
               <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
           </div>
@@ -66,7 +73,13 @@ export default {
         console.log("Fail", res.err);
       }
     },
-    deleteProduct() {}
+    async deleteProduct(product_id) {
+      const res = await ProductAPI.deleteProductById(product_id);
+      this.loadProducts();
+    },
+    toUpdateProduct(product_id){
+      this.$router.push('/product/update/' + product_id)
+    }
   },
   mounted() {
     this.loadProducts();

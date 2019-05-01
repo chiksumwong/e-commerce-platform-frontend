@@ -22,7 +22,7 @@
     <!-- /.row -->
 
     <!-- Related Projects Row -->
-    <h3 class="my-4">More Picture</h3>
+    <!-- <h3 class="my-4">More Picture</h3>
 
     <div class="row">
 
@@ -50,7 +50,7 @@
         </a>
       </div>
 
-    </div>
+    </div> -->
     <!-- /.row -->
     <b-input-group prepend="Quantity:" class="mt-2" size="lg">
       <b-form-input class="text-right" v-model="quantity"></b-form-input>

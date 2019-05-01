@@ -7,6 +7,8 @@ import Cart from '@/views/product/Cart'
 import Payment from '@/views/product/Payment'
 import PaymentCompleted from '@/views/product/PaymentCompleted'
 
+import UpdateProduct from '@/components/MyProduct/UpdateProduct'
+
 import UserRoutes from './user'
 
 Vue.use(Router)
@@ -23,6 +25,11 @@ export const router = new Router({
       path: '/product/:id',
       name: 'product',
       component: Product
+    },
+    {
+      path: '/product/update/:id',
+      name: 'update_product',
+      component: UpdateProduct
     },
     {
       path: '/cart',

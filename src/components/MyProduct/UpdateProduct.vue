@@ -14,7 +14,7 @@
           name="name"
           id="name"
           placeholder="Enter Product Name"
-          v-model="name"
+          v-model="product.name"
         >
       </div>
     </div>
@@ -33,7 +33,7 @@
           name="description"
           id="description"
           placeholder="Enter Product Description"
-          v-model="description"
+          v-model="product.description"
         >
       </div>
     </div>
@@ -52,90 +52,63 @@
           name="price"
           id="price"
           placeholder="Enter Product Price"
-          v-model="price"
+          v-model="product.selling_price"
         >
       </div>
     </div>
 
-  <!-- Image upload -->
-  <div class="form-group">
-      <label for="image">Product image</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="fas fa-camera-retro"></i>
-          </span>
-        </div>
-        <input type="file" @change="onFileSelected">
-      </div>
-    </div>
-
-
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-block" @click="uploadImage">CREATE</button>
+      <button type="button" class="btn btn-success btn-block" @click="UpdateProduct">Update</button>
     </div>
   </form>
 </template>
 
 <script>
 import ProductAPI from "@/api/Product";
-import axios from 'axios';
 
 export default {
   data() {
     return {
-      name: "",
-      description: "",
-      price: null,
-      image: "",
-      sellectedFile:null
+      product: {
+          images:[{
+            path:''
+          }]
+        },
     };
   },
   methods: {
     onFileSelected(event){
       this.sellectedFile = event.target.files[0]
     },
+    async loadProducts() {
+      const res = await ProductAPI.getProductById(this.$route.params.id);
 
-    uploadImage(){
-      var self = this;
-      const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dvfyipg5k/image/upload'
-      const CLOUDINARY_UPLOAD_PRESET = 'drfll21r'
+      if (res.data) {
+        console.log("load products update success", res.data);
 
-      let formData = new FormData();
-      formData.append('file', this.sellectedFile);
-      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+        this.product = res.data
 
-      let image_url;
-
-      axios({
-        url: CLOUDINARY_URL,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data:formData
-      }).then(function(res){
-        console.log(res);   
-        console.log("image url :", res.data.url);  
-        self.createProduct(res.data.url)
-      }).catch(function(err){
-        console.log(err);
-      });
+      } else {
+        console.log("Fail", res.err);
+      }
     },
-
-     async createProduct(image_url) {   
-
+    async UpdateProduct() {
       let user_id = this.$store.state.user.user_id;
+      let product_id = this.$route.params.id
+
       const payload = {
-        name: this.name,
-        description: this.description,
-        selling_price: this.price,
-        marked_price: this.price,
+        name: this.product.name,
+        description: this.product.description,
+        selling_price: this.product.selling_price,
+        marked_price: this.product.selling_price,
         seller: user_id,
-        images: [{ path: image_url }]
+        images: [{ path: this.product.images[0].path }]
       };
 
-      const res = await ProductAPI.createProduct(payload);
+      console.log("load payload", payload);
+
+
+      const res = await ProductAPI.updateProductById(product_id, payload);
 
       if (res.data) {
         console.log("create product success", res.data);
@@ -143,10 +116,12 @@ export default {
       } else {
         console.log("Fail", res.err);
       }
-    },
-
-
+    }
+  },
+  mounted() {
+    this.loadProducts();
   }
+
 };
 </script>
 
