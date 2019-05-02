@@ -34,6 +34,10 @@ export default {
 
                 router.push('/');
             }else{
+                Vue.prototype.$notice.error({
+                    title: 'Login Failure',
+                    description: 'Please Check Your Email and Password!'
+                })
                 commit('loginFailure');
             }
 
