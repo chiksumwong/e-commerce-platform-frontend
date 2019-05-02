@@ -13,13 +13,10 @@ export default {
         user_id:null
     },
     actions: {
-
         async login({ commit }, payload) {
-
-            // user login via user login api
-            const res = await UserAPI.login(payload);
-
-            if (res.data){
+            try{
+                // user login via user login api
+                const res = await UserAPI.login(payload);
                 console.log('login success', res.data);
                 localStorage.setItem('token', res.data.token);
                 commit('loginSuccess', res.data);
@@ -32,24 +29,22 @@ export default {
                     description: 'Enjoy your shopping!'
                 })
 
-                router.push('/');
-            }else{
+                router.push('/'); 
+            }catch(e){
+                console.log(e)
                 Vue.prototype.$notice.error({
                     title: 'Login Failure',
                     description: 'Please Check Your Email and Password!'
                 })
                 commit('loginFailure');
             }
-
         },
-
         logout({ commit }) {
             localStorage.removeItem('token');
             commit('logout');
             store.dispatch('cart/clearCarts');
             router.push('/');
         }
-
     },
     mutations: {
         loginSuccess(state, user) {
