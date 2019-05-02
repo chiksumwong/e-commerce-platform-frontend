@@ -115,6 +115,7 @@ import UserAPI from "@/api/User";
         })
         const res = await UserAPI.deleteUserById(this.$store.state.user.user_id);
         this.$store.dispatch('user/logout')
+        this.$router.push('/')
       }
     },
     computed: {
