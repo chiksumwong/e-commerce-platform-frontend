@@ -52,10 +52,10 @@
 
     </div> -->
     <!-- /.row -->
-    <b-input-group prepend="Quantity:" class="mt-2" size="lg">
+    <b-input-group prepend="Quantity:" class="mt-2" size="lg" v-show="isLogin" >
       <b-form-input class="text-right" v-model="quantity"></b-form-input>
       <b-input-group-append>
-        <b-button block variant="success" v-show="isLogin" @click="addToCart(product._id, quantity)">Add To Cart</b-button>
+        <b-button block variant="success" @click="addToCart(product._id, quantity)">Add To Cart</b-button>
       </b-input-group-append>
     </b-input-group>
      

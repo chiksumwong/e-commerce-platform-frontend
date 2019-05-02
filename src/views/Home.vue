@@ -18,7 +18,7 @@
                 <p class="card-text">{{product.description}}</p>
               </div>
               <!-- card footer -->
-              <div class="card-footer" v-show="isLogin">
+              <div class="card-footer">
                 <h5>$ {{product.selling_price}}</h5>
               </div>
 
