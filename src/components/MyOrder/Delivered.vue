@@ -42,7 +42,7 @@ export default {
   methods: {
     async loadOrders() {
       const user_id = this.$store.state.user.user_id;
-      const res = await OrderAPI.getOrderByUserId(user_id);
+      const res = await OrderAPI.getOrdersByBuyerId(user_id);
 
       if (res.data) {
         // console.log("myorder processing",res.data);

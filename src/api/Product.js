@@ -6,10 +6,11 @@ const ProductAPI = {
     getProductById: (productId) => Vue.prototype.$axios.get('/product/' + productId),
     updateProductById: (productId, payload) => Vue.prototype.$axios.put('/product/' + productId, payload),
     deleteProductById: (productId) => Vue.prototype.$axios.delete('/product/' + productId),
-
+    // cart
     addProductToCart: (payload) => Vue.prototype.$axios.post('/cart', payload),
     updateProductInCart: (userId, payload) => Vue.prototype.$axios.put('/cart/' + userId, payload),
-    getProductByUserId: (userId) => Vue.prototype.$axios.get('/products/' + userId)
+    // get all products of seller
+    getProductsBySellerId: (userId) => Vue.prototype.$axios.get('/products/' + userId)
 }
 
 export default ProductAPI

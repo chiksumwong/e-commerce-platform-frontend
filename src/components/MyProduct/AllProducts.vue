@@ -63,7 +63,7 @@ export default {
   methods: {
     async loadProducts() {
       const user_id = this.$store.state.user.user_id;
-      const res = await ProductAPI.getProductByUserId(user_id);
+      const res = await ProductAPI.getProductsBySellerId(user_id);
 
       if (res.data) {
         // console.log("load products by user id success", res.data);
