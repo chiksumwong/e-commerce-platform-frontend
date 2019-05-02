@@ -22,7 +22,7 @@
     <!-- /.row -->
 
     <!-- Related Projects Row -->
-    <h3 class="my-4">More Picture</h3>
+    <!-- <h3 class="my-4">More Picture</h3>
 
     <div class="row">
 
@@ -50,7 +50,7 @@
         </a>
       </div>
 
-    </div>
+    </div> -->
     <!-- /.row -->
     <b-input-group prepend="Quantity:" class="mt-2" size="lg">
       <b-form-input class="text-right" v-model="quantity"></b-form-input>
@@ -125,6 +125,11 @@ import ProductAPI from '@/api/Product'
 
         if(cart_res.data){
           console.log("add to cart success", cart_res.data)
+
+          this.$notice.success({
+            title: `Add ${productName} To Cart`,
+            description: `$ ${sellingPrice} * ${quantity}`
+          })
           // update carts
           this.$store.dispatch('cart/getCartsByUserId', cart_res.data._id);
         }

@@ -15,9 +15,9 @@
             </address>
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-            <p>
+            <!-- <p>
               <em>Date: 20th April, 2019</em>
-            </p>
+            </p> -->
             <p>
               <em>Ref #: 34522677W</em>
             </p>
@@ -104,6 +104,11 @@ export default {
     total() {
       return this.$store.state.payment.total;
     }
+  },
+  mounted() {
+    this.$notice.success({
+        title: 'Payment Completed',
+    })
   }
 };
 </script>

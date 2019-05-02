@@ -15,7 +15,7 @@ Vue.use(BootstrapVue)
 import axios from 'axios'
 const instance  = axios.create({
   // baseURL: (process.env.VUE_APP_BASE_URL !== undefined) ? process.env.VUE_APP_BASE_URL : 'http://localhost:3000/api/v1/'
-  baseURL: 'http://localhost:3000/api/v1/'
+  baseURL: process.env.VUE_APP_BASE_API,
 })
 instance.interceptors.request.use(
  (config) => {
@@ -35,8 +35,8 @@ instance.interceptors.request.use(
 Vue.prototype.$axios = instance ;
 
 // Notification
-import Notifications from 'vue-notification'
-Vue.use(Notifications)
+import CripNotice from 'crip-vue-notice'
+Vue.use(CripNotice)
 
 new Vue({
   router,

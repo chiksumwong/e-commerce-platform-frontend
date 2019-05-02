@@ -64,6 +64,7 @@
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
             <b-dropdown-item @click="toMyOrders">My Orders</b-dropdown-item>
             <b-dropdown-item @click="toMyProducts">My Products</b-dropdown-item>
+            <b-dropdown-item @click="deleteAccount">Delete Account</b-dropdown-item>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
 
@@ -75,6 +76,7 @@
 </template>
 
 <script>
+import UserAPI from "@/api/User";
   export default {
     data() {
       return {}
@@ -105,6 +107,14 @@
         const index = carts.map(e => e.product_id).indexOf(productId);
         carts.splice(index, 1);
         this.$store.dispatch('cart/updateCarts', carts)
+      },
+      async deleteAccount(){
+        this.$notice.error({
+          title: 'Account Deleted',
+          description: 'Bye Bye!'
+        })
+        const res = await UserAPI.deleteUserById(this.$store.state.user.user_id);
+        this.$store.dispatch('user/logout')
       }
     },
     computed: {

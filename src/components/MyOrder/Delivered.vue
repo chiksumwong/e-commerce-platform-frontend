@@ -1,10 +1,14 @@
 <template>
   <div>
-    <b-table striped hover :fields="fields" :items="orders">
+    <b-table striped hover :fields="fields" :items="orders" v-if="orders.length > 0">
       <template slot="actions" slot-scope="row">
         <b-button size="sm" @click="updateOrderStates(row.item)" class="mr-1">Receipt</b-button>
       </template>
     </b-table>
+
+    <b-card class="text-center" v-if="orders.length < 1">
+      <div class="bg-secondary text-light">Not Any Order !</div>
+    </b-card>
   </div>
 </template>
 
@@ -38,7 +42,7 @@ export default {
   methods: {
     async loadOrders() {
       const user_id = this.$store.state.user.user_id;
-      const res = await OrderAPI.getOrderByUserId(user_id);
+      const res = await OrderAPI.getOrdersByBuyerId(user_id);
 
       if (res.data) {
         // console.log("myorder processing",res.data);
@@ -72,6 +76,7 @@ export default {
       const res = await OrderAPI.updateOrderStates(productId, payload);
 
       if(res.data){
+        this.$root.$emit('statesChanged')
         this.loadOrders();
       }
     }

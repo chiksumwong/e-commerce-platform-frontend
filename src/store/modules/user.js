@@ -1,6 +1,7 @@
 import UserAPI from '@/api/User'
 import {router} from '@/router'
 import {store} from '@/store'
+import Vue from 'vue'
 
 export default {
     namespaced: true,
@@ -25,6 +26,11 @@ export default {
 
                 // update carts
                 store.dispatch('cart/getCartsByUserId', res.data.user_id);
+
+                Vue.prototype.$notice.success({
+                    title: 'Login Success',
+                    description: 'Enjoy your shopping!'
+                })
 
                 router.push('/');
             }else{
