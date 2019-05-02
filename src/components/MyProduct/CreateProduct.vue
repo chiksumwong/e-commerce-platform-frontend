@@ -139,6 +139,9 @@ export default {
 
       if (res.data) {
         console.log("create product success", res.data);
+         this.$notice.success({
+              title: 'Prodcut Created',
+          })
         this.$router.push("/");
       } else {
         console.log("Fail", res.err);

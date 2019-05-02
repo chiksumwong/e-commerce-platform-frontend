@@ -35,19 +35,8 @@ instance.interceptors.request.use(
 Vue.prototype.$axios = instance ;
 
 // Notification
-import Notifications from 'vue-notification'
-Vue.use(Notifications)
-
-// // // image upload
-// // import {CldContext, CldImage, CldVideo, CldTransformation} from 'cloudinary-vue';
-// import Cloudinary from 'cloudinary-vue';
-// Vue.use(Cloudinary, {
-//   configuration: {
-//     cloudName: "dvfyipg5k"
-//   }
-// });
-
-
+import CripNotice from 'crip-vue-notice'
+Vue.use(CripNotice)
 
 new Vue({
   router,

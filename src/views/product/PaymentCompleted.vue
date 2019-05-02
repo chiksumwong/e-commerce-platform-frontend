@@ -104,6 +104,11 @@ export default {
     total() {
       return this.$store.state.payment.total;
     }
+  },
+  mounted() {
+    this.$notice.success({
+        title: 'Payment Completed',
+    })
   }
 };
 </script>

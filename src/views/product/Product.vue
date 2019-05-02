@@ -125,6 +125,11 @@ import ProductAPI from '@/api/Product'
 
         if(cart_res.data){
           console.log("add to cart success", cart_res.data)
+
+          this.$notice.success({
+            title: `Add ${productName} To Cart`,
+            description: `$ ${sellingPrice} * ${quantity}`
+          })
           // update carts
           this.$store.dispatch('cart/getCartsByUserId', cart_res.data._id);
         }

@@ -109,6 +109,10 @@ import UserAPI from "@/api/User";
         this.$store.dispatch('cart/updateCarts', carts)
       },
       async deleteAccount(){
+        this.$notice.error({
+          title: 'Account Deleted',
+          description: 'Bye Bye!'
+        })
         const res = await UserAPI.deleteUserById(this.$store.state.user.user_id);
         this.$store.dispatch('user/logout')
       }

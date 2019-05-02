@@ -114,7 +114,10 @@ export default {
 
       if (res.data) {
         console.log("create product success", res.data);
-        this.$router.push("/");
+        this.$notice.success({
+          title: 'Product Updated',
+      })
+        this.$router.push("/myproduct");
       } else {
         console.log("Fail", res.err);
       }

@@ -75,6 +75,9 @@ export default {
     },
     async deleteProduct(product_id) {
       const res = await ProductAPI.deleteProductById(product_id);
+      this.$notice.error({
+          title: 'Product Deleted',
+      })
       this.loadProducts();
     },
     toUpdateProduct(product_id){
