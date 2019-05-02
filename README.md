@@ -1,40 +1,20 @@
-# e-commerce-platform-frontend
+# E-Commerce Platform Frontend
+
+## Live Demo
+- https://e-commerce-frontend-187100915.herokuapp.com/
 
 ## Project setup
 ```
-npm install
-```
+$ npm install
 
-### Compiles and hot-reloads for development
+$ npm run serve
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Project Detail
 
 - Use localStorage to storage jwt-token from backend
 
 - Use vuex with vuex-persistedstate to store user status, user info, shopping cart
+
+## Backend
+- https://github.com/chiksumwong/e-commerce-platform-backend
