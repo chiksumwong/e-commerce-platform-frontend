@@ -192,8 +192,8 @@
 </template>
 
 <script>
-import OrderAPI from "@/api/Order";
-import ProductAPI from "@/api/Product";
+import OrderAPI from "@/api/order";
+import ProductAPI from "@/api/product";
 export default {
   data() {
     return {

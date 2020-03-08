@@ -38,7 +38,21 @@ Vue.prototype.$axios = instance ;
 import CripNotice from 'crip-vue-notice'
 Vue.use(CripNotice)
 
+//i18n
+import VueI18n from 'vue-i18n'
+  //also able to get the js with API
+import en from './i18n/en/lang'
+import tw from './i18n/zh-TW/lang'
+import cn from './i18n/zh-CN/lang'
+Vue.use(VueI18n)
+const locale = localStorage.getItem('locale') || 'tw'
+const i18n = new VueI18n({
+  locale,
+  messages: { en, tw, cn }
+})
+
 new Vue({
+  i18n,
   router,
   store,
   render: function (h) { return h(App) }
