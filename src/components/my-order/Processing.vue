@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <b-table striped hover :fields="fields" :items="orders" v-if="orders.length > 0">
-      <template slot="actions" slot-scope="row">
-        <b-button size="sm" @click="updateOrderStates(row.item)" class="mr-1">Receipt</b-button>
-      </template>
-    </b-table>
+ <div>
+    <b-table striped hover :fields="fields" :items="orders" v-if="orders.length > 0"></b-table>
 
     <b-card class="text-center" v-if="orders.length < 1">
       <div class="bg-secondary text-light">Not Any Order !</div>
@@ -13,7 +9,7 @@
 </template>
 
 <script>
-import OrderAPI from "@/api/Order";
+import OrderAPI from "@/api/order";
 
 export default {
   data() {
@@ -34,8 +30,7 @@ export default {
               return "Receipted";
             }
           }
-        },
-        { key: "actions", label: "Actions" }
+        }
       ]
     };
   },
@@ -58,7 +53,7 @@ export default {
         // console.log("products in orders", products)
 
         let filterProcessOrder = products.filter(function(item, index, array) {
-          return item.order_states == 2;
+          return item.order_states == 1;
         });
 
         this.orders = filterProcessOrder;
@@ -67,20 +62,15 @@ export default {
       }
     },
 
-    async updateOrderStates(item) {
-      let productId = item._id
-      const payload = {
-        order_states: 3
-      };
-
-      const res = await OrderAPI.updateOrderStates(productId, payload);
-
-      if(res.data){
-        this.$root.$emit('statesChanged')
-        this.loadOrders();
+    orderStates(statesNumber) {
+      if (statesNumber == 1) {
+        return "Processing";
+      } else if (statesNumber == 2) {
+        return "Delivered";
+      } else {
+        return "Receipted";
       }
     }
-
   },
   mounted() {
     this.loadOrders();

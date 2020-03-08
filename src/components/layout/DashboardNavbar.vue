@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="primary">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
 
-      <b-navbar-brand href="/">E-COMMERCE PLATFORM</b-navbar-brand>
+      <b-navbar-brand href="/">Dashboard</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -29,44 +29,11 @@
             </b-button>
           </b-nav-form>
 
-
-          <!-- Shopping Cart -->
-          <b-nav-item-dropdown right v-show="isLogin">
-            <span slot="button-content"><i class="fas fa-shopping-cart"></i></span>
-
-            <b-dropdown-item class="cart" v-for="cart in carts" :key="cart.id">
-              <span class="item">
-                <span class="item-left" @click="toProduct(cart.product_id)">
-                  <img :src="cart.product_image" style="width: 70px;height: 50px;" alt="" />
-                  <span class="item-info">
-                    <span>{{cart.product_name}}</span>
-                    <span>${{cart.selling_price}} x {{cart.quantity}}</span>
-                  </span>
-                </span>
-                <span class="item-right">
-                  <button class="btn btn-xs btn-danger pull-right" @click="removeProductFromCart(carts, cart.product_id)">X</button>
-                </span>
-              </span>
-            </b-dropdown-item>
-
-            <b-dropdown-item @click="toCart">
-              <b-button block variant="primary" v-if="carts.length > 0">View Cart</b-button>
-            </b-dropdown-item>
-
-            <div class="text-center" v-if="carts.length < 1">
-              <p>Nothing in Cart</p>
-            </div>
-
-          </b-nav-item-dropdown>
-
           <!-- User -->
           <b-nav-item-dropdown right v-show="isLogin">
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
-            <b-dropdown-item @click="toMyOrders">My Orders</b-dropdown-item>
-            <b-dropdown-item @click="toMyProducts">My Products</b-dropdown-item>
-            <b-dropdown-item @click="deleteAccount">Delete Account</b-dropdown-item>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
-            <b-dropdown-item @click="dashboard" v-if="username == 'Admin'">Go to Dashboard</b-dropdown-item>
+            <b-dropdown-item @click="home">Back to Home</b-dropdown-item>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
@@ -92,8 +59,8 @@ import UserAPI from "@/api/user";
       logout() {
         this.$store.dispatch('user/logout')
       },
-      dashboard(){
-        this.$router.push('/dashboard')
+      home(){
+        this.$router.push('/')
       },
       toCart() {
         this.$router.push('/cart')

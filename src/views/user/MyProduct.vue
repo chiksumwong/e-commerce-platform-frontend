@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import ProductOrder from "@/components/MyProduct/ProductOrder";
-import AllProduct from "@/components/MyProduct/AllProducts";
-import CreateProduct from "@/components/MyProduct/CreateProduct";
+import ProductOrder from "@/components/my-product/ProductOrder";
+import AllProduct from "@/components/my-product/AllProducts";
+import CreateProduct from "@/components/my-product/CreateProduct";
 export default {
   components: {
     ProductOrder,

@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import AllOrder from "@/components/MyOrder/AllOrder";
-import Processing from "@/components/MyOrder/Processing";
-import Delivered from "@/components/MyOrder/Delivered";
-import Receipted from "@/components/MyOrder/Receipted";
+import AllOrder from "@/components/my-order/AllOrder";
+import Processing from "@/components/my-order/Processing";
+import Delivered from "@/components/my-order/Delivered";
+import Receipted from "@/components/my-order/Receipted";
 
 export default {
   components: {

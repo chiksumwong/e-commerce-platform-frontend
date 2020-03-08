@@ -1,4 +1,4 @@
-import UserAPI from '@/api/User'
+import UserAPI from '@/api/user'
 import {router} from '@/router'
 import {store} from '@/store'
 import Vue from 'vue'

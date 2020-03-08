@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import ProductAPI from "@/api/Product";
+import ProductAPI from "@/api/product";
 
 export default {
   data() {

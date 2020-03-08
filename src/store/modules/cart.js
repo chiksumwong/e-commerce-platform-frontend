@@ -1,5 +1,5 @@
-import UserAPI from '@/api/User'
-import ProductAPI from '@/api/Product'
+import UserAPI from '@/api/user'
+import ProductAPI from '@/api/product'
 import {store} from '@/store'
 
 export default {

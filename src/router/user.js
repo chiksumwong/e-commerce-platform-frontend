@@ -6,22 +6,22 @@ import MyProduct from '@/views/user/MyProduct'
 
 export default [
     {
-        path: '/login',
+        path: 'login',
         name: 'login',
         component: Login
     },
     {
-        path: '/register',
+        path: 'register',
         name: 'register',
         component: Register
     },
     {
-        path: '/myorder',
+        path: 'myorder',
         name: 'myorder',
         component: MyOrder
     },
     {
-        path: '/myproduct',
+        path: 'myproduct',
         name: 'myproduct',
         component: MyProduct
     },

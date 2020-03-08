@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import OrderAPI from "@/api/Order";
+import OrderAPI from "@/api/order";
 
 export default {
   data() {

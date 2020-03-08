@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import ProductAPI from "@/api/Product";
+import ProductAPI from "@/api/product";
 import axios from 'axios';
 
 export default {

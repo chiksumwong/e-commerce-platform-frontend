@@ -1,6 +1,10 @@
 <template>
- <div>
-    <b-table striped hover :fields="fields" :items="orders" v-if="orders.length > 0"></b-table>
+  <div>
+    <b-table striped hover :fields="fields" :items="orders" v-if="orders.length > 0">
+      <template slot="actions" slot-scope="row">
+        <b-button size="sm" @click="updateOrderStates(row.item)" class="mr-1">Delivered</b-button>
+      </template>
+    </b-table>
 
     <b-card class="text-center" v-if="orders.length < 1">
       <div class="bg-secondary text-light">Not Any Order !</div>
@@ -9,7 +13,7 @@
 </template>
 
 <script>
-import OrderAPI from "@/api/Order";
+import OrderAPI from "@/api/order";
 
 export default {
   data() {
@@ -30,14 +34,15 @@ export default {
               return "Receipted";
             }
           }
-        }
+        },
+        { key: "actions", label: "Actions" }
       ]
     };
   },
   methods: {
     async loadOrders() {
-      const user_id = this.$store.state.user.user_id;
-      const res = await OrderAPI.getOrdersByBuyerId(user_id);
+      const seller_id = this.$store.state.user.user_id;
+      const res = await OrderAPI.getProductsOrdersBySellerId(seller_id);
 
       if (res.data) {
         // console.log("myorder processing",res.data);
@@ -50,11 +55,11 @@ export default {
           });
         });
 
-        // console.log("products in orders", products)
-
         let filterProcessOrder = products.filter(function(item, index, array) {
           return item.order_states == 1;
         });
+
+        console.log("orders :", filterProcessOrder);
 
         this.orders = filterProcessOrder;
       } else {
@@ -62,13 +67,16 @@ export default {
       }
     },
 
-    orderStates(statesNumber) {
-      if (statesNumber == 1) {
-        return "Processing";
-      } else if (statesNumber == 2) {
-        return "Delivered";
-      } else {
-        return "Receipted";
+    async updateOrderStates(item) {
+      let productId = item._id;
+      const payload = {
+        order_states: 2
+      };
+
+      const res = await OrderAPI.updateOrderStates(productId, payload);
+
+      if (res.data) {
+        this.loadOrders();
       }
     }
   },
