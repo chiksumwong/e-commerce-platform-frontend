@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+   <div class="container">
     <br>
     <div class="card" style="width: 18rem;">
 
       <div class="card-header bg-primary text-light text">
         <i class="fas fa-file-alt"></i>
-        Login
+        Forgot Password
       </div>
 
       <div class="card-body">
@@ -22,20 +22,18 @@
           </div>
 
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="username">Your User Name</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
               </div>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" v-model="password"/>
+              <input type="username" class="form-control" name="username" id="username" placeholder="Enter User Name" v-model="username"/>
             </div>
           </div>
 
-          <a href="/forgotpassword">Forgot Password</a>
-
           <div class="form-group ">
-            <button type="button" class="btn btn-success btn-block" @click="login">Login</button>
-            <button type="button" class="btn btn-primary btn-block" @click="toRegister">Register</button>
+            <button type="button" class="btn btn-success btn-block" @click="forgotPassword">Submit</button>
+            <button type="button" class="btn btn-primary btn-block" @click="toLogin">Back to Login</button>
           </div>
 
         </form>
@@ -43,30 +41,22 @@
 
     </div>
   </div>
-
 </template>
 
 <script>
-    export default {
+export default {
         data() {
             return {
                 email: '',
-                password: ''
+                username: ''
             }
         },
         methods: {
-            login() {
-                const email = this.email;
-                const password = this.password;
-                if (email && password) {
-                    this.$store.dispatch('user/login', {
-                        email,
-                        password
-                    });
-                }
+            forgotPassword(){
+                this.$router.push('/resetpassword')
             },
-            toRegister(){
-                this.$router.push('/register')
+            toLogin(){
+                this.$router.push('/login')
             }
         },
     }

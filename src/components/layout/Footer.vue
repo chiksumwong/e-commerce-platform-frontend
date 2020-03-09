@@ -48,6 +48,6 @@
         bottom: 0;
         width: 100%;
         height: 60px;
-        padding: 20px;
+        padding: 12px;
     }
 </style>
