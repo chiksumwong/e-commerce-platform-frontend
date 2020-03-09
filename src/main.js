@@ -51,6 +51,17 @@ const i18n = new VueI18n({
   messages: { en, tw, cn }
 })
 
+//element-ui
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI, {
+  i18n: (key, value) => i18n.t(key, value)
+})
+
+//vue-data-tables
+import VueDataTables from 'vue-data-tables'
+Vue.use(VueDataTables)
+
 new Vue({
   i18n,
   router,

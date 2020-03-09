@@ -62,6 +62,7 @@
           <!-- User -->
           <b-nav-item-dropdown right v-show="isLogin">
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
+            <b-dropdown-item @click="toProfile">Profile</b-dropdown-item>
             <b-dropdown-item @click="toMyOrders">My Orders</b-dropdown-item>
             <b-dropdown-item @click="toMyProducts">My Products</b-dropdown-item>
             <b-dropdown-item @click="deleteAccount">Delete Account</b-dropdown-item>
@@ -97,6 +98,9 @@ import UserAPI from "@/api/user";
       },
       toCart() {
         this.$router.push('/cart')
+      },
+      toProfile(){
+        this.$router.push('/profile')
       },
       toMyOrders() {
         this.$router.push('/myorder')

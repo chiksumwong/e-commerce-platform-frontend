@@ -23,7 +23,7 @@ export const router = new Router({
       component: Home,
       children: [
         {
-          path: '',
+          path: '/',
           name: 'products',
           component: Products
         },
@@ -64,7 +64,7 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // web pages which don't need to login
-  const publicPages = ['home','product','login','register', 'forgot_password', 'reset_password'];
+  const publicPages = ['products','login','register','forgot_password','reset_password'];
 
   const authRequired = !publicPages.includes(to.name);
   const loggedIn = localStorage.getItem('token');
