@@ -62,6 +62,10 @@ Vue.use(ElementUI, {
 import VueDataTables from 'vue-data-tables'
 Vue.use(VueDataTables)
 
+//vue-json-excel
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
+
 new Vue({
   i18n,
   router,
