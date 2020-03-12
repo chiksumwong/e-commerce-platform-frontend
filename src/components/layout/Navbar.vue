@@ -63,9 +63,8 @@
           <b-nav-item-dropdown right v-show="isLogin">
             <template slot="button-content" class="text-uppercase"><em>{{username}}</em></template>
             <b-dropdown-item @click="toProfile">Profile</b-dropdown-item>
-            <b-dropdown-item @click="toMyOrders">My Orders</b-dropdown-item>
-            <b-dropdown-item @click="toMyProducts">My Products</b-dropdown-item>
-            <b-dropdown-item @click="deleteAccount">Delete Account</b-dropdown-item>
+            <b-dropdown-item @click="toMyOrders" v-show="!isAdmin">My Orders</b-dropdown-item>
+            <b-dropdown-item @click="toMyProducts" v-show="!isAdmin">My Products</b-dropdown-item>
             <b-dropdown-item @click="logout">Logout</b-dropdown-item>
             <b-dropdown-item @click="dashboard" v-if="username == 'Admin'">Go to Dashboard</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -126,6 +125,13 @@ import UserAPI from "@/api/user";
       }
     },
     computed: {
+      isAdmin(){
+        if (this.$store.state.user.username === "Admin") {
+          return true
+        }else {
+          return false
+        }
+      },
       isLogin() {
         return this.$store.state.user.status.isLogin
       },

@@ -36,6 +36,7 @@
           <div class="form-group ">
             <button type="button" class="btn btn-success btn-block" @click="login">Login</button>
             <button type="button" class="btn btn-primary btn-block" @click="toRegister">Register</button>
+            <button type="button" class="btn btn-info btn-block" @click="loginAdmin">Login As Admin</button>
           </div>
 
         </form>
@@ -55,6 +56,16 @@
             }
         },
         methods: {
+            loginAdmin(){
+              const email = "admin@test.com";
+                const password = "test";
+                if (email && password) {
+                    this.$store.dispatch('user/login', {
+                        email,
+                        password
+                    });
+                }
+            },
             login() {
                 const email = this.email;
                 const password = this.password;
