@@ -1,5 +1,5 @@
 import Dashboard from '@/views/Dashboard'
-import Users from '@/views/user-management/Users'
+import Users from '@/views/dashboard/Users'
 
 export default [
     {

@@ -3,17 +3,26 @@
         <footer class="bg-info">
             <div class="container">
                 <b-row>
-                    <b-col><p class="m-0 text-left">
-                        <b-button @click="switchFrontSize('S')" variant="info" style="font-size:12px;">A</b-button>
-                        <b-button @click="switchFrontSize('M')" variant="info" style="font-size:16px;">A</b-button>
-                        <b-button @click="switchFrontSize('L')" variant="info" style="font-size:20px;">A</b-button>
-                    </p>
+                    <b-col sm>
+                        <p class="text-left">
+                            <b-button @click="switchFrontSize('S')" variant="info" style="font-size:12px;">A</b-button>
+                            <b-button @click="switchFrontSize('M')" variant="info" style="font-size:16px;">A</b-button>
+                            <b-button @click="switchFrontSize('L')" variant="info" style="font-size:20px;">A</b-button>
+                        </p>
                     </b-col>
-                    <b-col><p class="m-0 text-center text-white">Copyright &copy; Wong Chik Sum 2019 </p></b-col>
-                    <b-col>
-                        <b-button  @click="switchLang('en')" variant="info">ENG</b-button>
-                        <b-button @click="switchLang('tw')" variant="info">TW</b-button>
-                        <b-button @click="switchLang('cn')" variant="info">CN</b-button>
+                    <b-col sm>
+                        <p class="text-center text-white">
+                            <b-button disabled variant="info">
+                                Copyright &copy; Wong Chik Sum 2020
+                            </b-button>
+                        </p>
+                    </b-col>
+                    <b-col sm>
+                        <p class="text-right">
+                            <b-button  @click="switchLang('en')" variant="info">ENG</b-button>
+                            <b-button @click="switchLang('tw')" variant="info">TW</b-button>
+                            <b-button @click="switchLang('cn')" variant="info">CN</b-button>
+                        </p>
                     </b-col>
                 </b-row>
             </div>
@@ -47,7 +56,7 @@
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 60px;
-        padding: 12px;
+        height: 65px;
+        padding: 5px;
     }
 </style>
