@@ -58,10 +58,6 @@ Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
-//vue-data-tables
-import VueDataTables from 'vue-data-tables'
-Vue.use(VueDataTables)
-
 //vue-json-excel
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)

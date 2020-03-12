@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="primary">
+    <b-navbar toggleable="lg" type="dark" variant="info">
 
       <b-navbar-brand href="/">{{ $t("e_commerce_platform") }}</b-navbar-brand>
 

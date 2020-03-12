@@ -1,24 +1,19 @@
 <template>
     <div>
-        <div style="margin-bottom: 10px;">
-            <el-button @click="exportAll" style="margin-right: 10px;">export all</el-button>
-            <el-button @click="exportFiltered">export filtered</el-button>
-
-            <el-input style="width: 200px; margin-left: 20px;" v-model="filters[0].value"></el-input>
-        </div>
-
-        <data-tables :data="data" :filters="filters" @filtered-data="handleFilteredData">
-            <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :key="title.label">
-            </el-table-column>
-        </data-tables>
-
-
         <!-- vue-json-excel -->
-        <download-excel :data = "excel_json_data" :fields = "excel_json_fields" name = "filename.xls">
-            <el-button type="success"> Download Excel  </el-button>
+        <download-excel :data="excel_json_data" :fields="excel_json_fields" name="filename.xls">
+            <el-button type="success"> Download Excel </el-button>
         </download-excel>
 
 
+        <el-table :data="tableData" style="width: 100%">
+            <el-table-column prop="date" label="Date" width="180">
+            </el-table-column>
+            <el-table-column prop="name" label="Name" width="180">
+            </el-table-column>
+            <el-table-column prop="address" label="Address">
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 
@@ -26,52 +21,36 @@
     export default {
         data() {
             return {
-                data: [{
-                    "content": "Water flood",
-                    "flow_no": "FW201601010001",
-                    "flow_type": "Repair",
-                    "flow_type_code": "repair",
-                    }, {
-                    "content": "Lock broken",
-                    "flow_no": "FW201601010002",
-                    "flow_type": "Repair",
-                    "flow_type_code": "repair",
-                    }, {
-                    "content": "Help to buy some drinks",
-                    "flow_no": "FW201601010003",
-                    "flow_type": "Help",
-                    "flow_type_code": "help"
+                tableData: [{
+                    date: '2016-05-03',
+                    name: 'Tom',
+                    address: 'No. 189, Grove St, Los Angeles'
+                }, {
+                    date: '2016-05-02',
+                    name: 'Tom',
+                    address: 'No. 189, Grove St, Los Angeles'
+                }, {
+                    date: '2016-05-04',
+                    name: 'Tom',
+                    address: 'No. 189, Grove St, Los Angeles'
+                }, {
+                    date: '2016-05-01',
+                    name: 'Tom',
+                    address: 'No. 189, Grove St, Los Angeles'
                 }],
-                titles: [{
-                    prop: "flow_no",
-                    label: "NO."
-                    }, {
-                    prop: "content",
-                    label: "Content"
-                    }, {
-                    prop: "flow_type",
-                    label: "Type"
-                }],
-                filters: [{
-                    value: ''
-                }],
-                filteredData: [],
-                columns: ['flow_no', 'content', 'flow_type'],
-                columnNames: ['Flow NO.', 'Content', 'type'],
 
                 excel_json_fields: {
                     'Complete name': 'name',
                     'City': 'city',
                     'Telephone': 'phone.mobile',
-                    'Telephone 2' : {
+                    'Telephone 2': {
                         field: 'phone.landline',
                         callback: (value) => {
                             return `Landline Phone - ${value}`;
                         }
                     },
                 },
-                excel_json_data: [
-                    {
+                excel_json_data: [{
                         'name': 'Tony Peña',
                         'city': 'New York',
                         'country': 'United States',
@@ -95,34 +74,95 @@
             }
         },
         methods: {
-            CsvExport (data, fields, fieldNames, fileName) {
-                try {
-                    var result = json2csv({
-                        data: data,
-                        fields: fields,
-                        fieldNames: fieldNames
-                    })
-                    var csvContent = 'data:text/csvcharset=GBK,\uFEFF' + result
-                    var encodedUri = encodeURI(csvContent)
-                    var link = document.createElement('a')
-                    link.setAttribute('href', encodedUri)
-                    link.setAttribute('download', `${(fileName || 'file')}.csv`)
-                    document.body.appendChild(link)
-                    link.click()
-                    document.body.removeChild(link)
-                } catch (err) {
-                    console.error(err)
-                }
-            },
-            exportAll() {
-                this.CsvExport(this.data, this.columns, this.columnNames, 'all')
-            },
-            exportFiltered() {
-                this.CsvExport(this.filteredData, this.columns, this.columnNames, 'filtered')
-            },
-            handleFilteredData(filteredData) {
-                this.filteredData = filteredData
-            }
+           
         }
     }
 </script>
+
+<style scoped>
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td,
+    article,
+    aside,
+    canvas,
+    details,
+    embed,
+    figure,
+    figcaption,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    output,
+    ruby,
+    section,
+    summary,
+    time,
+    mark,
+    audio,
+    video,
+    button {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+</style>
