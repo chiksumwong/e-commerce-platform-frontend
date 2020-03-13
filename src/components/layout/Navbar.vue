@@ -31,7 +31,9 @@
 
 
           <!-- Shopping Cart -->
+          <div v-show="!isAdmin">
           <b-nav-item-dropdown right v-show="isLogin">
+            
             <span slot="button-content"><i class="fas fa-shopping-cart"></i></span>
 
             <b-dropdown-item class="cart" v-for="cart in carts" :key="cart.id">
@@ -56,8 +58,11 @@
             <div class="text-center" v-if="carts.length < 1">
               <p>Nothing in Cart</p>
             </div>
+            
 
           </b-nav-item-dropdown>
+            </div>
+
 
           <!-- User -->
           <b-nav-item-dropdown right v-show="isLogin">
