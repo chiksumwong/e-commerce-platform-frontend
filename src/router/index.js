@@ -1,77 +1,121 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import { store } from "@/store";
+import VueRouter from "vue-router";
 
-import Home from '@/views/Home'
-import Product from '@/views/product/Product'
-import Products from '@/views/product/Products'
-import Cart from '@/views/product/Cart'
-import Payment from '@/views/product/Payment'
-import PaymentCompleted from '@/views/product/PaymentCompleted'
+// Layout
+import WebsiteLayout from "@/views/App/WebsiteLayout";
+import AdminPanelLayout from "@/views/App/AdminPanelLayout";
 
-import UpdateProduct from '@/components/my-product/UpdateProduct'
+// Site Routes
+import RegistrationRoute from "@/router/site/account/registration";
+import ForgotPasswordRoute from "@/router/site/account/forgot_password";
+import PasswordExpiryRoute from "@/router/site/account/password_expiry";
+import ResetTFARoute from "@/router/site/account/reset_tfa";
+import AccountRoute from "@/router/site/account/account";
 
-import UserRoutes from './user'
-import DashboardRoutes from './dashboard'
+// Admin Routes
+import SystemLogRoute from "@/router/admin/system_log";
 
-Vue.use(Router)
+// Home Page (Public, Vender, Admin)
+import Home from "@/views/Website/Home";
+import Dashboard from "@/views/AdminPanel/Dashboard";
 
-export const router = new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/',
-      component: Home,
-      children: [
-        {
-          path: '/',
-          name: 'products',
-          component: Products
-        },
-        {
-          path: 'product/:id',
-          name: 'product',
-          component: Product
-        },
-        {
-          path: 'product/update/:id',
-          name: 'update_product',
-          component: UpdateProduct
-        },
-        {
-          path: 'cart',
-          name: 'cart',
-          component: Cart
-        },
-        {
-          path: 'payment',
-          name: 'payment',
-          component: Payment
-        },{
-          path: 'payment/completed',
-          name: 'payment_completed',
-          component: PaymentCompleted
-        },
-        ...UserRoutes,
-      ]
-    },
-    ...DashboardRoutes,
+Vue.use(VueRouter);
 
-    
-    // otherwise redirect to home
-    { path: '*', redirect: '/' }
-  ]
-})
+// handle "Avoided redundant navigation to current location"
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+};
+
+const routes = [
+  {
+    path: "/",
+    component: WebsiteLayout,
+    children: [
+      {
+        path: "",
+        component: TenderNoticeList,
+        meta: {
+          authorize: ["Public"]
+        }
+      },
+      {
+        path: "home",
+        component: Home,
+        meta: {
+          authorize: ["Vendor"]
+        }
+      },
+      ...RegistrationRoute,
+      ...ForgotPasswordRoute,
+      ...PasswordExpiryRoute,
+      ...ResetTFARoute,
+      ...AccountRoute
+    ]
+  },
+  {
+    path: "/a",
+    component: AdminPanelLayout,
+    children: [
+      {
+        path: "",
+        component: Dashboard,
+        meta: {
+          authorize: ["Admin"]
+        }
+      },
+      ...ManagementRoute,
+      ...SystemLogRoute,
+      ...SettingRoute
+    ]
+  },
+  {
+    path: "*",
+    redirect: "/"
+  }
+];
+
+export const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
+});
 
 router.beforeEach((to, from, next) => {
-  // web pages which don't need to login
-  const publicPages = ['products','login','register','forgot_password','reset_password'];
+  //each page
 
-  const authRequired = !publicPages.includes(to.name);
-  const loggedIn = localStorage.getItem('token');
+  // get page meta's authorize
+  const { authorize } = to.meta;
 
-  if (authRequired && !loggedIn) {
-    return next('/login');
+  // current status
+  const loggedIn = store.state.account.l;
+  const isAdmin = store.state.account.a;
+
+  // check current status first
+  // check page role
+  if (loggedIn) {
+    if (isAdmin) {
+      if (authorize.length && authorize.includes("Admin")) {
+        next();
+      } else {
+        return next({ path: "/a" });
+      }
+    } else if (!isAdmin) {
+      if (authorize.length && authorize.includes("Vendor")) {
+        next();
+      } else {
+        return next({ path: "/home" });
+      }
+    }
+  } else {
+    if (authorize.length && authorize.includes("Public")) {
+      next();
+    } else {
+      const loginpath = window.location.pathname;
+      return next({ path: "/login", query: { redirect: loginpath } });
+    }
   }
-
+  // to that page
   next();
-})
+});
