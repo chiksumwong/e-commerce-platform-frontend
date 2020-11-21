@@ -4,6 +4,9 @@ import { i18n } from "./i18n";
 import { router } from './router'
 import { store } from './store';
 
+// Debug
+console.log = function() {};
+
 //API
 import "./api";
 

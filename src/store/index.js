@@ -15,6 +15,8 @@ import createPersistedState from "vuex-persistedstate";
 
 import system from "@/store/modules/system";
 import account from "@/store/modules/account";
+import cart from "@/store/modules/cart";
+import payment from "@/store/modules/payment";
 
 export const store = new Vuex.Store({
   modules: {
